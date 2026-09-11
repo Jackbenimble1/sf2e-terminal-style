@@ -1,0 +1,1484 @@
+/* ========================================================================== */
+/* SF2e 1.5.0 runtime fixes                                                   */
+/* Foundry VTT 14.367                                                        */
+/*                                                                            */
+/* This file is intentionally loaded last. It corrects collisions caused by   */
+/* the original terminal theme's intentionally aggressive global !important    */
+/* rules while leaving SF2e's grid/flex layout in control.                    */
+/* ========================================================================== */
+
+/* -------------------------------------------------------------------------- */
+/* 1. Respect SF2e's compact application typography                           */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active .actor.sheet,
+body.sf2e-terminal-active .pf2e.item.sheet,
+body.sf2e-terminal-active .sf2e-terminal,
+body.sf2e-terminal-active .compendium-browser,
+body.sf2e-terminal-active #tooltip,
+body.sf2e-terminal-active .locked-tooltip,
+body.sf2e-terminal-active .pf2e-tooltip,
+body.sf2e-terminal-active .context-menu,
+body.sf2e-terminal-active #context-menu,
+body.sf2e-terminal-active .dropdown-menu,
+body.sf2e-terminal-active .menu-items {
+  --terminal-font-size: var(--sf2e-sheet-font-size, 13px) !important;
+}
+
+/* Some legacy SF2e ActorSheet windows do not consistently receive the generic
+   application class from every render path. Apply the terminal font directly
+   to text-bearing elements without touching Font Awesome/action glyph fonts. */
+body.sf2e-terminal-active .actor.sheet :is(
+  h1, h2, h3, h4, h5, h6,
+  p, a, label, input, select, option, textarea, button,
+  td, th, li, strong, em, small,
+  span:not(.action-glyph):not(.fa):not(.fas):not(.far):not(.fab):not([class*="fa-"])
+),
+body.sf2e-terminal-active .pf2e.item.sheet :is(
+  h1, h2, h3, h4, h5, h6,
+  p, a, label, input, select, option, textarea, button,
+  td, th, li, strong, em, small,
+  span:not(.action-glyph):not(.fa):not(.fas):not(.far):not(.fab):not([class*="fa-"])
+) {
+  font-family: var(--terminal-font) !important;
+}
+
+/* Keep the system's fixed grid from acquiring a second outer scrollbar. SF2e
+   owns scrolling in the sidebar and active tab-content containers. */
+body.sf2e-terminal-active .actor.sheet section.window-content,
+body.sf2e-terminal-active .pf2e.item.sheet section.window-content {
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
+body.sf2e-terminal-active .actor.sheet .crb-style,
+body.sf2e-terminal-active .actor.sheet .sheet-body,
+body.sf2e-terminal-active .actor.sheet .sheet-content,
+body.sf2e-terminal-active .actor.sheet .sheet-content > .tab,
+body.sf2e-terminal-active .actor.sheet .tab-content {
+  min-width: 0 !important;
+  min-height: 0 !important;
+}
+
+body.sf2e-terminal-active .actor.sheet .crb-style .sidebar {
+  overflow: hidden auto !important;
+}
+
+body.sf2e-terminal-active .actor.sheet .sheet-body .sheet-content > .tab:not(.inventory, .actions),
+body.sf2e-terminal-active .actor.sheet .sheet-body .sheet-content .tab-content {
+  overflow: hidden auto !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 2. Compact sheet controls                                                  */
+/* -------------------------------------------------------------------------- */
+
+/* The original theme gives every button 6px/12px padding. SF2e's inline
+   buttons live in tightly measured rows, so restore compact control geometry. */
+body.sf2e-terminal-active .actor.sheet button.inline-control,
+body.sf2e-terminal-active .actor.sheet button.icon,
+body.sf2e-terminal-active .actor.sheet button[data-action="toggle-search-mode"],
+body.sf2e-terminal-active .pf2e.item.sheet button.inline-control,
+body.sf2e-terminal-active .pf2e.item.sheet button.icon {
+  padding: 0.125rem 0.25rem !important;
+  min-width: 0 !important;
+  line-height: 1 !important;
+}
+
+body.sf2e-terminal-active .actor.sheet .sheet-navigation a.item,
+body.sf2e-terminal-active .actor.sheet .sheet-navigation [data-tab] {
+  padding: 0 !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+  line-height: 1 !important;
+}
+
+body.sf2e-terminal-active .actor.sheet .sheet-navigation a.item::before,
+body.sf2e-terminal-active .actor.sheet .sheet-navigation a.item::after,
+body.sf2e-terminal-active .actor.sheet .sheet-navigation [data-tab]::before,
+body.sf2e-terminal-active .actor.sheet .sheet-navigation [data-tab]::after {
+  content: none !important;
+}
+
+/* Preserve room for the proficiency/skill columns instead of letting inputs
+   and selects inherit the 19px core-UI size. */
+body.sf2e-terminal-active .actor.sheet input,
+body.sf2e-terminal-active .actor.sheet select,
+body.sf2e-terminal-active .actor.sheet option,
+body.sf2e-terminal-active .actor.sheet textarea,
+body.sf2e-terminal-active .pf2e.item.sheet input,
+body.sf2e-terminal-active .pf2e.item.sheet select,
+body.sf2e-terminal-active .pf2e.item.sheet option,
+body.sf2e-terminal-active .pf2e.item.sheet textarea {
+  font-size: var(--sf2e-sheet-font-size, 13px) !important;
+}
+
+/* A little hierarchy is useful after compacting the old universal font rule. */
+body.sf2e-terminal-active .actor.sheet .sidebar_title,
+body.sf2e-terminal-active .actor.sheet .sidebar h2,
+body.sf2e-terminal-active .actor.sheet .sheet-navigation .panel-title,
+body.sf2e-terminal-active .actor.sheet .sheet-content h2,
+body.sf2e-terminal-active .actor.sheet .sheet-content h3 {
+  font-size: calc(var(--sf2e-sheet-font-size, 13px) + 3px) !important;
+  line-height: 1.05 !important;
+}
+
+body.sf2e-terminal-active .actor.sheet .sidebar_label,
+body.sf2e-terminal-active .actor.sheet .sidebar label,
+body.sf2e-terminal-active .actor.sheet .item-list .item-controls,
+body.sf2e-terminal-active .actor.sheet .inventory-list .item-controls,
+body.sf2e-terminal-active .actor.sheet .item-list .item-detail,
+body.sf2e-terminal-active .actor.sheet .inventory-list .item-detail {
+  font-size: max(9px, calc(var(--sf2e-sheet-font-size, 13px) - 3px)) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 3. Character sidebar collision fixes                                       */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active .actor.sheet.character .sidebar header,
+body.sf2e-terminal-active .actor.sheet.character .sidebar .perception,
+body.sf2e-terminal-active .actor.sheet.character .sidebar .initiative,
+body.sf2e-terminal-active .actor.sheet.character .sidebar .saves,
+body.sf2e-terminal-active .actor.sheet.character .sidebar .armor-class,
+body.sf2e-terminal-active .actor.sheet.character .sidebar .hit-points {
+  min-width: 0 !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .sidebar ul.saves > li,
+body.sf2e-terminal-active .actor.sheet.character .sidebar .armor-class > *,
+body.sf2e-terminal-active .actor.sheet.character .sidebar .hit-points > * {
+  min-width: 0 !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .sidebar ul.saves :is(h4, label, a),
+body.sf2e-terminal-active .actor.sheet.character .sidebar .armor-class :is(h4, label),
+body.sf2e-terminal-active .actor.sheet.character .sidebar .hit-points :is(h4, label) {
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 4. Foundry V14 canvas/sidebar controls                                     */
+/* -------------------------------------------------------------------------- */
+
+/* V14's canvas HUD consumes the --control-* custom properties. Bridge them to
+   the terminal palette so scene and sidebar icons don't fall back to gray. */
+body.sf2e-terminal-active #ui-left,
+body.sf2e-terminal-active #ui-right,
+body.sf2e-terminal-active #ui-top,
+body.sf2e-terminal-active #scene-controls,
+body.sf2e-terminal-active #sidebar {
+  --control-bg-color: color-mix(in srgb, var(--terminal-bg) 92%, var(--terminal-primary)) !important;
+  --control-border-color: var(--terminal-border) !important;
+  --control-icon-color: var(--terminal-primary) !important;
+  --control-active-bg-color: var(--terminal-primary) !important;
+  --control-active-icon-color: var(--terminal-bg) !important;
+}
+
+body.sf2e-terminal-active :is(
+  #scene-controls,
+  #scene-controls-layers,
+  #scene-controls-tools,
+  #sidebar-tabs,
+  #ui-left,
+  #ui-right
+) :is(button, .ui-control, .control-tool) {
+  color: var(--terminal-primary) !important;
+  border-color: var(--terminal-border) !important;
+}
+
+body.sf2e-terminal-active :is(
+  #scene-controls,
+  #scene-controls-layers,
+  #scene-controls-tools,
+  #sidebar-tabs,
+  #ui-left,
+  #ui-right
+) :is(button, .ui-control, .control-tool) i {
+  color: currentColor !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+body.sf2e-terminal-active :is(
+  #scene-controls,
+  #scene-controls-layers,
+  #scene-controls-tools,
+  #sidebar-tabs
+) :is(button, .ui-control, .control-tool):hover {
+  background: color-mix(in srgb, var(--terminal-primary) 28%, var(--terminal-bg)) !important;
+  color: var(--terminal-primary) !important;
+}
+
+body.sf2e-terminal-active :is(
+  #scene-controls,
+  #scene-controls-layers,
+  #scene-controls-tools,
+  #sidebar-tabs
+) :is(button, .ui-control, .control-tool)[aria-pressed="true"],
+body.sf2e-terminal-active #sidebar-tabs .active {
+  background: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+}
+
+/* Fixed-width V14 canvas widgets clip badly at the old 19px terminal size. */
+body.sf2e-terminal-active #scene-navigation,
+body.sf2e-terminal-active #players,
+body.sf2e-terminal-active #hotbar {
+  --terminal-font-size: var(--sf2e-ui-font-size, 15px) !important;
+  font-size: var(--sf2e-ui-font-size, 15px) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 5. Sidebar directory contrast                                              */
+/* -------------------------------------------------------------------------- */
+
+/* Core's folder hover/active plate is very bright against the terminal theme.
+   Keep the folder legible rather than using cyan-on-cyan text. */
+body.sf2e-terminal-active #sidebar .directory-list li.folder > .folder-header,
+body.sf2e-terminal-active #sidebar .directory-list li.folder > header.folder-header {
+  background: color-mix(in srgb, var(--terminal-primary) 12%, var(--terminal-bg)) !important;
+  border-color: var(--terminal-border) !important;
+  color: var(--terminal-primary) !important;
+}
+
+body.sf2e-terminal-active #sidebar .directory-list li.folder > .folder-header :is(h3, a, span, i),
+body.sf2e-terminal-active #sidebar .directory-list li.folder > header.folder-header :is(h3, a, span, i) {
+  color: var(--terminal-primary) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+body.sf2e-terminal-active #sidebar .directory-list li.folder > .folder-header:hover,
+body.sf2e-terminal-active #sidebar .directory-list li.folder > header.folder-header:hover {
+  background: color-mix(in srgb, var(--terminal-primary) 24%, var(--terminal-bg)) !important;
+  color: var(--terminal-primary) !important;
+}
+
+body.sf2e-terminal-active #sidebar .directory-list li.folder > .folder-header:hover :is(h3, a, span, i),
+body.sf2e-terminal-active #sidebar .directory-list li.folder > header.folder-header:hover :is(h3, a, span, i) {
+  color: var(--terminal-primary) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+/* ========================================================================== */
+/* 6. SF2e runtime correction pass 2.0.2                                     */
+/* ========================================================================== */
+
+/* -------------------------------------------------------------------------- */
+/* Canvas controls: preserve the normal icon size and center it geometrically */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active :is(
+  #scene-controls,
+  #scene-controls-layers,
+  #scene-controls-tools,
+  #sidebar-tabs
+) :is(button, .ui-control, .control-tool) {
+  box-sizing: border-box !important;
+  padding: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+body.sf2e-terminal-active :is(
+  #scene-controls,
+  #scene-controls-layers,
+  #scene-controls-tools,
+  #sidebar-tabs
+) :is(button, .ui-control, .control-tool) > i {
+  display: block !important;
+  position: static !important;
+  width: 20px !important;
+  height: 20px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 20px !important;
+  line-height: 20px !important;
+  text-align: center !important;
+  transform: none !important;
+}
+
+body.sf2e-terminal-active :is(
+  #scene-controls,
+  #scene-controls-layers,
+  #scene-controls-tools,
+  #sidebar-tabs
+) :is(button, .ui-control, .control-tool) > svg {
+  display: block !important;
+  width: 20px !important;
+  height: 20px !important;
+  margin: 0 !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Character-sheet section controls                                           */
+/*                                                                            */
+/* SF2e intentionally uses very small header buttons. The legacy theme's      */
+/* universal 6px/12px button padding displaced the content in every Edit,     */
+/* Browse, Create, and Add control. Restore one common compact geometry.       */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active .actor.sheet.character .sheet-content header .controls {
+  align-items: center !important;
+  align-self: center !important;
+  display: flex !important;
+  gap: var(--space-2, 2px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .sheet-content header > button,
+body.sf2e-terminal-active .actor.sheet.character .sheet-content header .controls > button {
+  align-items: center !important;
+  align-self: center !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  gap: 0.25em !important;
+  height: 1.4rem !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  min-height: 1.4rem !important;
+  min-width: 0 !important;
+  padding: 0 0.4rem !important;
+  vertical-align: middle !important;
+  white-space: nowrap !important;
+  font-size: 12px !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .sheet-content header button > i {
+  align-self: center !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .sheet-content header button input[type="checkbox"] {
+  flex: 0 0 0.75rem !important;
+  height: 0.75rem !important;
+  margin: 0 0.2rem 0 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  width: 0.75rem !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Hit Points: make the terminal treatment use three genuinely aligned cells  */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active .actor.sheet.character .sidebar .hitpoints .hp-big {
+  align-items: start !important;
+  column-gap: 0.35rem !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  justify-content: stretch !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .sidebar .hitpoints .hp-big > .container {
+  align-items: center !important;
+  background: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  display: grid !important;
+  grid-template-rows: 1rem 1.65rem !important;
+  justify-items: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .sidebar .hitpoints .hp-big > .container :is(label, h4) {
+  align-items: center !important;
+  display: flex !important;
+  height: 1rem !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .sidebar .hitpoints .hp-big > .container .data-value {
+  align-items: center !important;
+  display: flex !important;
+  height: 1.65rem !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .sidebar .hitpoints .hp-big > .container input[type="number"],
+body.sf2e-terminal-active .actor.sheet.character .sidebar .hitpoints .hp-big > .container.max-hp .data-value h2 {
+  align-items: center !important;
+  background: var(--terminal-bg) !important;
+  border: 1px solid var(--terminal-border) !important;
+  box-sizing: border-box !important;
+  color: var(--terminal-primary) !important;
+  display: flex !important;
+  font-family: var(--terminal-font) !important;
+  font-size: 14px !important;
+  height: 1.5rem !important;
+  justify-content: center !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  max-width: 3.6rem !important;
+  padding: 0 !important;
+  text-align: center !important;
+  width: 100% !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Strike controls: retain SF2e's single-row design without clipping Critical */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active .actor.sheet.character .sheet-content.actions li.strike,
+body.sf2e-terminal-active .actor.sheet.character .sheet-content .actions li.strike {
+  min-width: 0 !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .sheet-content.actions li.strike .button-group,
+body.sf2e-terminal-active .actor.sheet.character .sheet-content .actions li.strike .button-group {
+  gap: 1px !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+  width: 100% !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .sheet-content.actions li.strike .button-group > button,
+body.sf2e-terminal-active .actor.sheet.character .sheet-content .actions li.strike .button-group > button {
+  align-items: center !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  flex: 0 1 auto !important;
+  font-size: 11px !important;
+  gap: 0.15em !important;
+  height: 1.25rem !important;
+  justify-content: center !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+  padding: 0 0.25em !important;
+  white-space: nowrap !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Currency: restore functional denomination art and center numeric values     */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active .actor.sheet.character .coinage .currency {
+  align-items: center !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .coinage .currency .denomination {
+  align-items: center !important;
+  min-height: 1.5rem !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .coinage .currency .denomination > span {
+  align-items: center !important;
+  align-self: stretch !important;
+  display: inline-flex !important;
+  justify-content: flex-start !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  padding: 0 0.4rem !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .coinage .currency .currency-image {
+  flex: 0 0 1.5rem !important;
+  height: 1.5rem !important;
+  width: 1.5rem !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .coinage .currency .denomination.pp .currency-image {
+  background-image: url("/icons/equipment/treasure/currency/platinum-pieces.webp") !important;
+}
+body.sf2e-terminal-active .actor.sheet.character .coinage .currency .denomination.gp .currency-image {
+  background-image: url("/icons/equipment/treasure/currency/gold-pieces.webp") !important;
+}
+body.sf2e-terminal-active .actor.sheet.character .coinage .currency .denomination.sp .currency-image {
+  background-image: url("/icons/equipment/treasure/currency/silver-pieces.webp") !important;
+}
+body.sf2e-terminal-active .actor.sheet.character .coinage .currency .denomination.cp .currency-image {
+  background-image: url("/icons/equipment/treasure/currency/copper-pieces.webp") !important;
+}
+body.sf2e-terminal-active .actor.sheet.character .coinage .currency .denomination.credits .currency-image {
+  background-image: url("/icons/sundries/gaming/playing-cards-grey.webp") !important;
+}
+body.sf2e-terminal-active .actor.sheet.character .coinage .currency .denomination.upb .currency-image {
+  background-image: url("/icons/equipment/treasure/currency/upb.webp") !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .coinage .currency li > button {
+  align-items: center !important;
+  display: inline-flex !important;
+  height: 1.5rem !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  margin: 0 0 0 2px !important;
+  min-height: 1.5rem !important;
+  padding: 0 !important;
+  width: 1.875rem !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .coinage .currency li > button > i {
+  line-height: 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Spellcasting: the stock d20 SVG uses a dark fill, invisible on terminal BG */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active .actor.sheet.character .spellcasting-entry .rollable .d20-svg {
+  display: inline-block !important;
+  flex: 0 0 14px !important;
+  height: 14px !important;
+  margin: 0 0.2rem 0 0 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  width: 14px !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .spellcasting-entry .rollable .d20-svg path {
+  fill: var(--terminal-primary) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Crafting formulas: restore the fixed grid's measured row heights/buttons   */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active .actor.sheet.character .known-formulas ol.formula-list {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .known-formulas li.formula-level-header {
+  align-items: center !important;
+  box-sizing: border-box !important;
+  height: 1.75rem !important;
+  line-height: 1 !important;
+  min-height: 1.75rem !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .known-formulas li.formula-level-header :is(h3, h4, span) {
+  line-height: 1 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .known-formulas li.formula-item {
+  align-items: center !important;
+  box-sizing: border-box !important;
+  min-height: 2.4rem !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .known-formulas li.formula-item .item-name {
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .known-formulas li.formula-item .item-name .item-image {
+  flex: 0 0 2rem !important;
+  height: 2rem !important;
+  margin: 0.15rem 0 0.15rem 0.25rem !important;
+  width: 2rem !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .known-formulas li.formula-item .item-name h4 {
+  min-width: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .known-formulas li.formula-item button.craft {
+  align-items: center !important;
+  display: inline-flex !important;
+  font-size: 10px !important;
+  height: 1.5rem !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  min-height: 1.5rem !important;
+  min-width: 2.5rem !important;
+  padding: 0 0.25em !important;
+  width: fit-content !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .known-formulas li.formula-item .quantity input {
+  height: 1.4rem !important;
+  line-height: 1 !important;
+  padding: 0 !important;
+  text-align: center !important;
+  width: 1.5rem !important;
+}
+
+
+/* ========================================================================== */
+/* 7. Foundry V14 core UI correction pass 2.0.3                              */
+/* ========================================================================== */
+
+/*
+ * The 2.0.2 geometry rule is intentionally limited to the actual scene-tool
+ * stacks and sidebar tab rail. Do not apply icon-only grid geometry to
+ * #ui-left or #ui-right wholesale: those containers also own Scene Navigation,
+ * directories, Settings, and other controls which contain both icons and text.
+ */
+
+/* -------------------------------------------------------------------------- */
+/* Bottom hotbar controls                                                     */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active #hotbar .bar-controls :is(button, a, .ui-control),
+body.sf2e-terminal-active .sf2e-terminal-app-hotbar .bar-controls :is(button, a, .ui-control) {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+}
+
+body.sf2e-terminal-active #hotbar .bar-controls :is(button, a, .ui-control) > i,
+body.sf2e-terminal-active .sf2e-terminal-app-hotbar .bar-controls :is(button, a, .ui-control) > i {
+  display: block !important;
+  position: static !important;
+  flex: 0 0 auto !important;
+  width: 1em !important;
+  height: 1em !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  transform: none !important;
+}
+
+body.sf2e-terminal-active #hotbar .bar-controls :is(button, a, .ui-control) > svg,
+body.sf2e-terminal-active .sf2e-terminal-app-hotbar .bar-controls :is(button, a, .ui-control) > svg {
+  display: block !important;
+  position: static !important;
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  transform: none !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Sidebar directory headers                                                  */
+/* -------------------------------------------------------------------------- */
+
+/* Undo the original terminal theme's oversized create-button padding and icon
+   margin inside V14 directory headers. These buttons are icon + label rows. */
+body.sf2e-terminal-active #sidebar .directory-header :is(
+  button,
+  a.button,
+  .header-control,
+  .ui-control
+) {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  flex-flow: row nowrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.35rem !important;
+  min-height: 2rem !important;
+  height: auto !important;
+  padding: 0.25rem 0.5rem !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+body.sf2e-terminal-active #sidebar .directory-header :is(
+  button,
+  a.button,
+  .header-control,
+  .ui-control
+) > i {
+  display: block !important;
+  position: static !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
+  height: 1em !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  transform: none !important;
+}
+
+body.sf2e-terminal-active #sidebar .directory-header :is(
+  button,
+  a.button,
+  .header-control,
+  .ui-control
+) > :is(span, label) {
+  align-self: center !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+
+/* Search/sort icon-only controls in directory headers use the same centering
+   without forcing their neighboring text inputs into button geometry. */
+body.sf2e-terminal-active #sidebar .directory-header button:has(> i:only-child),
+body.sf2e-terminal-active #sidebar .directory-header .ui-control:has(> i:only-child) {
+  aspect-ratio: 1 / 1 !important;
+  padding: 0 !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Scene Navigation                                                           */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active #scene-navigation :is(
+  .scene.ui-control,
+  [data-scene-id].ui-control,
+  [data-entry-id].ui-control
+),
+body.sf2e-terminal-active .sf2e-terminal-app-scene-navigation :is(
+  .scene.ui-control,
+  [data-scene-id].ui-control,
+  [data-entry-id].ui-control
+) {
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-flow: row nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 0.3rem !important;
+  min-height: 2rem !important;
+  height: auto !important;
+  padding: 0.25rem 0.45rem !important;
+  line-height: 1 !important;
+  overflow: hidden !important;
+  text-align: left !important;
+}
+
+body.sf2e-terminal-active #scene-navigation :is(
+  .scene.ui-control,
+  [data-scene-id].ui-control,
+  [data-entry-id].ui-control
+) > :is(.scene-name, span.ellipsis),
+body.sf2e-terminal-active .sf2e-terminal-app-scene-navigation :is(
+  .scene.ui-control,
+  [data-scene-id].ui-control,
+  [data-entry-id].ui-control
+) > :is(.scene-name, span.ellipsis) {
+  align-self: center !important;
+  display: block !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.15 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+body.sf2e-terminal-active #scene-navigation :is(
+  .scene.ui-control,
+  [data-scene-id].ui-control,
+  [data-entry-id].ui-control
+) > .icons {
+  display: inline-flex !important;
+  align-items: center !important;
+  flex: 0 0 auto !important;
+  margin-left: auto !important;
+  line-height: 1 !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Journal Entry V14 icon controls                                            */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active :is(
+  .journal-entry,
+  .sf2e-terminal-app-journal-entry-sheet,
+  .sf2e-terminal-app-journal-entry-page-sheet
+) button:has(> i:only-child),
+body.sf2e-terminal-active :is(
+  .journal-entry,
+  .sf2e-terminal-app-journal-entry-sheet,
+  .sf2e-terminal-app-journal-entry-page-sheet
+) .ui-control:has(> i:only-child) {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+}
+
+body.sf2e-terminal-active :is(
+  .journal-entry,
+  .sf2e-terminal-app-journal-entry-sheet,
+  .sf2e-terminal-app-journal-entry-page-sheet
+) :is(button, .ui-control):has(> i:only-child) > i {
+  display: block !important;
+  position: static !important;
+  width: 1em !important;
+  height: 1em !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  transform: none !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Scene Config V14 controls                                                  */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active :is(
+  .application.scene-config,
+  .sf2e-terminal-app-scene-config
+) button:has(> i:only-child),
+body.sf2e-terminal-active :is(
+  .application.scene-config,
+  .sf2e-terminal-app-scene-config
+) .ui-control:has(> i:only-child) {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+}
+
+body.sf2e-terminal-active :is(
+  .application.scene-config,
+  .sf2e-terminal-app-scene-config
+) :is(button, .ui-control):has(> i:only-child) > i {
+  display: block !important;
+  position: static !important;
+  width: 1em !important;
+  height: 1em !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  transform: none !important;
+}
+
+body.sf2e-terminal-active :is(
+  .application.scene-config,
+  .sf2e-terminal-app-scene-config
+) nav.tabs [data-tab] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.3rem !important;
+  line-height: 1 !important;
+}
+
+body.sf2e-terminal-active :is(
+  .application.scene-config,
+  .sf2e-terminal-app-scene-config
+) nav.tabs [data-tab] > i {
+  position: static !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+  transform: none !important;
+}
+
+/* Scene Config uses compact checkbox-like controls. The legacy theme's global
+   font size can make Foundry's pseudo-icon larger than the control itself. */
+body.sf2e-terminal-active :is(
+  .application.scene-config,
+  .sf2e-terminal-app-scene-config
+) input[type="checkbox"] {
+  box-sizing: border-box !important;
+  flex: 0 0 auto !important;
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  min-width: 1.25rem !important;
+  min-height: 1.25rem !important;
+  margin: 0 0.25rem !important;
+  padding: 0 !important;
+  font-size: 12px !important;
+  line-height: 1 !important;
+  vertical-align: middle !important;
+}
+
+body.sf2e-terminal-active :is(
+  .application.scene-config,
+  .sf2e-terminal-app-scene-config
+) input[type="checkbox"]::before,
+body.sf2e-terminal-active :is(
+  .application.scene-config,
+  .sf2e-terminal-app-scene-config
+) input[type="checkbox"]::after {
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 12px !important;
+  line-height: 1 !important;
+  transform: none !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Settings sidebar                                                           */
+/* -------------------------------------------------------------------------- */
+
+/* Settings entries are icon + label buttons. Two-line labels exposed the same
+   problem as directory headers: grid placement put the icon and label in
+   separate rows. Keep them in one centered flex row and let the label wrap. */
+body.sf2e-terminal-active #settings :is(button, a.button, .ui-control),
+body.sf2e-terminal-active .sf2e-terminal-app-settings :is(button, a.button, .ui-control) {
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-flow: row nowrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.45rem !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 2rem !important;
+  padding: 0.35rem 0.5rem !important;
+  line-height: 1.15 !important;
+  text-align: center !important;
+}
+
+body.sf2e-terminal-active #settings :is(button, a.button, .ui-control) > i,
+body.sf2e-terminal-active .sf2e-terminal-app-settings :is(button, a.button, .ui-control) > i {
+  display: block !important;
+  position: static !important;
+  flex: 0 0 auto !important;
+  width: 1em !important;
+  height: 1em !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  transform: none !important;
+}
+
+body.sf2e-terminal-active #settings :is(button, a.button, .ui-control) > :is(span, label),
+body.sf2e-terminal-active .sf2e-terminal-app-settings :is(button, a.button, .ui-control) > :is(span, label) {
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.15 !important;
+  text-align: center !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+}
+
+/* ========================================================================== */
+/* 8. Foundry V14 core UI correction pass 2.0.4                              */
+/* ========================================================================== */
+
+/* -------------------------------------------------------------------------- */
+/* Sidebar submenu/document action icons                                      */
+/*                                                                            */
+/* Many V14 directory-row controls use two Font Awesome glyphs (for example   */
+/* an object icon plus a small +). 2.0.3's :only-child test therefore missed */
+/* them and the legacy global button padding pushed the glyph group toward    */
+/* the lower-right corner. Center the control itself and every glyph inside   */
+/* the directory-row control clusters, regardless of glyph count.            */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active #sidebar .directory-list :is(
+  .controls,
+  .folder-controls,
+  .document-controls,
+  .item-controls,
+  .action-buttons
+) {
+  align-items: center !important;
+  display: inline-flex !important;
+  gap: 0.15rem !important;
+  justify-content: flex-end !important;
+  line-height: 1 !important;
+}
+
+body.sf2e-terminal-active #sidebar .directory-list :is(
+  .controls,
+  .folder-controls,
+  .document-controls,
+  .item-controls,
+  .action-buttons
+) > :is(button, a, .ui-control, [data-action]) {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  flex: 0 0 1.75rem !important;
+  width: 1.75rem !important;
+  height: 1.75rem !important;
+  min-width: 1.75rem !important;
+  min-height: 1.75rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+body.sf2e-terminal-active #sidebar .directory-list :is(
+  .controls,
+  .folder-controls,
+  .document-controls,
+  .item-controls,
+  .action-buttons
+) > :is(button, a, .ui-control, [data-action]) :is(i, svg) {
+  box-sizing: border-box !important;
+  display: block !important;
+  position: static !important;
+  inset: auto !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
+  height: 1em !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  translate: none !important;
+  transform: none !important;
+}
+
+/* V14 also places some folder/document actions directly on the row/header     */
+/* without a named .controls wrapper. Restrict this fallback to icon-bearing   */
+/* action controls with no text-label element, including multi-icon controls. */
+body.sf2e-terminal-active #sidebar .directory-list :is(.folder-header, .directory-item, li.document) > :is(
+  button,
+  a,
+  .ui-control,
+  [data-action]
+):has(i):not(:has(> span, > label)) {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  flex: 0 0 1.75rem !important;
+  width: 1.75rem !important;
+  height: 1.75rem !important;
+  min-width: 1.75rem !important;
+  min-height: 1.75rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+}
+
+body.sf2e-terminal-active #sidebar .directory-list :is(.folder-header, .directory-item, li.document) > :is(
+  button,
+  a,
+  .ui-control,
+  [data-action]
+):has(i):not(:has(> span, > label)) i {
+  position: static !important;
+  inset: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  translate: none !important;
+  transform: none !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Hotbar control geometry                                                    */
+/*                                                                            */
+/* Preserve Foundry's left/right grouping, but make every individual control  */
+/* box the same square and center its glyph. This avoids the mixed widths and */
+/* bottom-right icon drift visible in the V14 hotbar.                         */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active #hotbar .bar-controls {
+  box-sizing: border-box !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 2px !important;
+}
+
+body.sf2e-terminal-active #hotbar .bar-controls > :is(
+  button,
+  a,
+  .ui-control,
+  .page-control,
+  .macro-directory,
+  .toggle-hotbar,
+  [data-action]
+) {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 1.75rem !important;
+  width: 1.75rem !important;
+  height: 1.75rem !important;
+  min-width: 1.75rem !important;
+  min-height: 1.75rem !important;
+  max-width: 1.75rem !important;
+  max-height: 1.75rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+}
+
+body.sf2e-terminal-active #hotbar .bar-controls > :is(
+  button,
+  a,
+  .ui-control,
+  .page-control,
+  .macro-directory,
+  .toggle-hotbar,
+  [data-action]
+) :is(i, svg) {
+  box-sizing: border-box !important;
+  display: block !important;
+  position: static !important;
+  inset: auto !important;
+  flex: 0 0 auto !important;
+  width: 1em !important;
+  height: 1em !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  translate: none !important;
+  transform: none !important;
+}
+
+/* If V14 renders a control as a direct non-button action element, normalize   */
+/* that element too without changing the macro slots themselves.              */
+body.sf2e-terminal-active #hotbar .bar-controls > [class*="control"]:not(.bar-controls) {
+  box-sizing: border-box !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 1.75rem !important;
+  height: 1.75rem !important;
+  min-width: 1.75rem !important;
+  min-height: 1.75rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Known Formula grid alignment                                               */
+/*                                                                            */
+/* The stock sheet uses a min-content Craft track independently for every row.*/
+/* Terminal button metrics made that track a different width in the hidden    */
+/* header button and visible formula buttons. Give header and item rows the    */
+/* exact same tracks and explicitly place DC/Cost/Quantity.                   */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active .actor.sheet.character .known-formulas :is(
+  li.formula-level-header,
+  li.formula-item
+) {
+  display: grid !important;
+  grid-template-areas: "name dc price quantity button controls" !important;
+  grid-template-columns: minmax(0, 1fr) 1.5rem 4.5rem 5.125rem 3.25rem 1.75rem !important;
+  align-items: center !important;
+  justify-items: center !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .known-formulas :is(
+  li.formula-level-header,
+  li.formula-item
+) > .item-name {
+  grid-area: name !important;
+  justify-self: start !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .known-formulas li.formula-level-header > .formula-dc-header,
+body.sf2e-terminal-active .actor.sheet.character .known-formulas li.formula-item > .dc {
+  grid-area: dc !important;
+  justify-self: center !important;
+  text-align: center !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .known-formulas li.formula-level-header > .formula-cost-header,
+body.sf2e-terminal-active .actor.sheet.character .known-formulas li.formula-item > :is(.cost, .price) {
+  grid-area: price !important;
+  justify-self: center !important;
+  text-align: center !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .known-formulas li.formula-level-header > .formula-quantity-header,
+body.sf2e-terminal-active .actor.sheet.character .known-formulas li.formula-item > .quantity {
+  grid-area: quantity !important;
+  justify-self: center !important;
+  text-align: center !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .known-formulas :is(
+  li.formula-level-header,
+  li.formula-item
+) > button.craft {
+  grid-area: button !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  justify-self: center !important;
+  width: 3.05rem !important;
+  min-width: 3.05rem !important;
+  max-width: 3.05rem !important;
+  height: 1.5rem !important;
+  min-height: 1.5rem !important;
+  margin: 0 !important;
+  padding: 0 0.2rem !important;
+  font-size: 10px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character .known-formulas :is(
+  li.formula-level-header,
+  li.formula-item
+) > .item-controls {
+  grid-area: controls !important;
+  justify-self: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: center !important;
+}
+
+/* ========================================================================== */
+/* 9. Foundry V14 rendered-control normalization pass 2.0.5                   */
+/* ========================================================================== */
+
+/*
+ * The persistent hotbar and directory controls are not all rendered as
+ * button/a/.ui-control elements. terminal-effects.js now tags the actual
+ * icon-only wrapper element after render. These rules mirror the successful
+ * square scene/sidebar controls and serve as a CSS fallback to the inline
+ * normalization applied by the runtime tagger.
+ */
+
+body.sf2e-terminal-active #hotbar .sf2e-terminal-square-control,
+body.sf2e-terminal-active #sidebar .sf2e-terminal-square-control {
+  box-sizing: border-box !important;
+  display: grid !important;
+  place-items: center !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 32px !important;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  max-width: 32px !important;
+  max-height: 32px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+  list-style: none !important;
+}
+
+body.sf2e-terminal-active #hotbar .sf2e-terminal-square-control > :is(i, svg, .fa-layers, .icon),
+body.sf2e-terminal-active #sidebar .sf2e-terminal-square-control > :is(i, svg, .fa-layers, .icon) {
+  box-sizing: border-box !important;
+  display: grid !important;
+  place-items: center !important;
+  position: static !important;
+  inset: auto !important;
+  width: 20px !important;
+  height: 20px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 20px !important;
+  line-height: 20px !important;
+  text-align: center !important;
+  translate: none !important;
+  transform: none !important;
+}
+
+/* Keep the two hotbar control stacks exactly one control wide. Macro slots are
+   deliberately untouched. */
+body.sf2e-terminal-active #hotbar .bar-controls {
+  box-sizing: border-box !important;
+  flex: 0 0 32px !important;
+  width: 32px !important;
+  min-width: 32px !important;
+  max-width: 32px !important;
+  align-items: center !important;
+}
+
+/* ========================================================================== */
+/* 2.0.6 - Character sidebar native geometry restoration                     */
+/* ========================================================================== */
+
+/* The terminal theme's broad h2/button rules made every sidebar section
+   header substantially larger than SF2e's native layout. Preserve the
+   terminal palette/font, but restore the geometry SF2e 1.5.0 expects. */
+body.sf2e-terminal-active .actor.sheet.character form.crb-style aside .sidebar > header {
+  align-items: end !important;
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  justify-content: space-between !important;
+  margin: 0.8em 0 0.5em !important;
+  min-height: 0 !important;
+  width: 100% !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character form.crb-style aside .sidebar > header:first-of-type {
+  margin-bottom: -1px !important;
+  margin-top: 0.5em !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character form.crb-style aside .sidebar > header > h2 {
+  flex: 1 1 auto !important;
+  font-family: var(--terminal-font) !important;
+  font-size: 13px !important;
+  font-variant: small-caps !important;
+  letter-spacing: 0.05em !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character form.crb-style aside .sidebar > header > button {
+  align-items: center !important;
+  align-self: end !important;
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  font-family: var(--terminal-font) !important;
+  font-size: 9px !important;
+  font-weight: 600 !important;
+  gap: 2px !important;
+  height: auto !important;
+  justify-content: center !important;
+  letter-spacing: 0.05em !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  min-height: 0 !important;
+  min-width: 0 !important;
+  padding: 2px 3px !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  width: auto !important;
+}
+
+body.sf2e-terminal-active .actor.sheet.character form.crb-style aside .sidebar > header > button > :is(i, svg, .icon) {
+  flex: 0 0 auto !important;
+  font-size: 10px !important;
+  height: 10px !important;
+  line-height: 10px !important;
+  margin: 0 !important;
+  max-height: 10px !important;
+  max-width: 10px !important;
+  padding: 0 !important;
+  width: 10px !important;
+}
+
+/* Keep the native sidebar content inset instead of allowing broader terminal
+   application padding to make the section rows appear horizontally shifted. */
+body.sf2e-terminal-active .actor.sheet.character form.crb-style aside .sidebar {
+  box-sizing: border-box !important;
+  padding-left: 6px !important;
+  padding-right: 2px !important;
+}
+
+
+/* ========================================================================== */
+/* 2.0.8 - Foundry V14 self-iconized button correction                       */
+/* ========================================================================== */
+
+/*
+ * Foundry V14 commonly renders an icon by putting Font Awesome classes on the
+ * button itself, for example:
+ *
+ *   <button class="... icon fa-solid fa-triangle"></button>
+ *
+ * terminal-style.css deliberately treats .icon as an icon element and forces
+ * it to display:inline-block. In V14 that also changes the BUTTON's display,
+ * defeating the centering geometry used by Foundry. The global button rule
+ * also adds 6px 12px padding. Override those two legacy assumptions on the
+ * actual self-iconized control and leave parent layout to Foundry.
+ */
+body.sf2e-terminal-active button.icon {
+  box-sizing: border-box !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  text-indent: 0 !important;
+  vertical-align: middle !important;
+}
+
+/* The visible Font Awesome glyph is generated by ::before on these empty
+ * buttons. Make the pseudo-element a centered grid item. Do not reset its
+ * transform: Foundry may use transforms to orient individual glyphs. */
+body.sf2e-terminal-active button.icon::before,
+body.sf2e-terminal-active button.icon::after {
+  align-self: center !important;
+  justify-self: center !important;
+  display: block !important;
+  position: static !important;
+  inset: auto !important;
+  float: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+}
+
+/* Exact V14 hotbar structure supplied from the rendered DOM. Keep the right
+ * and left control stacks centered, and normalize the actual icon buttons to
+ * one square size without touching macro slots. */
+body.sf2e-terminal-active :is(#hotbar-controls-left, #hotbar-controls-right) {
+  align-items: center !important;
+}
+
+body.sf2e-terminal-active #hotbar-page-controls,
+body.sf2e-terminal-active :is(#hotbar-controls-left, #hotbar-controls-right) > .flexcol {
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+body.sf2e-terminal-active :is(#hotbar-controls-left, #hotbar-controls-right) button.icon {
+  flex: 0 0 32px !important;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  max-width: 32px !important;
+  max-height: 32px !important;
+  margin: 0 !important;
+  font-size: 16px !important;
+}
+
+/* Exact SF2e Party folder structure supplied from the rendered DOM. These are
+ * the compact controls flanking the folder label. The folder row still owns
+ * placement; the buttons own only their square hitbox and glyph centering. */
+body.sf2e-terminal-active #sidebar .folder-header > button.inline-control.icon,
+body.sf2e-terminal-active #sidebar .folder-header > button.create-button.icon {
+  flex: 0 0 24px !important;
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  max-width: 24px !important;
+  max-height: 24px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 12px !important;
+}

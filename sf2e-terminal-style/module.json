@@ -1,0 +1,39 @@
+{
+  "id": "sf2e-terminal-style",
+  "type": "module",
+  "title": "Starfinder 2e Terminal Style",
+  "description": "SF2e-specific port of the Cyberpunk/Starfinder Terminal Style, preserving the original terminal presets, typography, glow, colors, and UI treatment for Starfinder Second Edition.",
+  "version": "2.0.8",
+  "compatibility": {
+    "minimum": "14.367",
+    "verified": "14.367",
+    "maximum": "14"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "sf2e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "1.5.0",
+          "verified": "1.5.0",
+          "maximum": "1.5.0"
+        }
+      }
+    ]
+  },
+  "authors": [
+    {
+      "name": "GusRPG"
+    }
+  ],
+  "esmodules": [
+    "scripts/terminal-effects.js"
+  ],
+  "styles": [
+    "styles/terminal-style.css",
+    "styles/sf2e-overrides.css",
+    "styles/sf2e-runtime-fixes.css"
+  ],
+  "readme": "README.md"
+}

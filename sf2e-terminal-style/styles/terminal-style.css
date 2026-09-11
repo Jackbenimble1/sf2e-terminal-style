@@ -1,0 +1,4219 @@
+/* ====================================
+   SF2E TERMINAL STYLE - BASE LAYER (ported from original module)
+   Black and Green with ASCII effects
+   ==================================== */
+
+/* Import monospace fonts for terminal effect */
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Overpass+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+/* Local system fonts (fallbacks) */
+body {
+  font-family: 'Courier Prime', 'Share Tech Mono', 'Consolas', 'Menlo', 'Monaco', monospace;
+}
+
+/* Foundry V14 supplies Font Awesome. Do not import a second icon font stack. */
+
+/* CSS Variables for easy configuration */
+:root {
+  --terminal-bg: #000000;
+  --terminal-primary: #009900;
+  --terminal-secondary: #006600;
+  --terminal-dim: #0b530b;
+  --terminal-text: #008800;
+  --terminal-warning: #cccc00;
+  --terminal-error: #cc0000;
+  --terminal-border: #008800;
+  --terminal-font: 'Courier Prime', 'Share Tech Mono', monospace;
+  --terminal-glow: 0 0 2px #009900, 0 0 4px #009900, 0 0 6px #009900;
+  --terminal-text-shadow: 0 0 1px #009900;
+  --terminal-font-size: 22px;
+}
+
+/* SPECIFIC EXCLUSIONS FOR ICONS - VERY IMPORTANT */
+/* DO NOT apply terminal styles to icon elements */
+i,
+.fa,
+.fas,
+.far,
+.fab,
+.fal,
+.fad,
+.fass,
+.fasr,
+.fasl,
+[class*="fa-"]:before,
+[class^="fa-"]:before,
+.icon:before,
+.fas:before,
+.far:before,
+.fab:before,
+.fal:before,
+.fad:before {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro", "Font Awesome 5 Free", "Font Awesome 5 Pro", "Font Awesome 5 Brands", "FontAwesome" !important;
+  /* Font Awesome needs specific font-weight */
+  font-style: normal !important;
+  font-variant: normal !important;
+  text-rendering: auto !important;
+  line-height: 1 !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  display: inline-block !important;
+  text-decoration: none !important;
+  background: none !important;
+  background-color: transparent !important;
+}
+
+/* Base class for terminal style - COMPLETELY EXCLUDE ICONS */
+.cyberpunk {
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+.cyberpunk *:not(i):not(.fa):not(.fas):not(.far):not(.fab):not(.fal):not(.fad):not(.fass):not(.fasr):not(.fasl):not([class*="fa-"]):not([class^="fa-"]):not(.icon) {
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* SPECIFIC RULES FOR ICONS - Completely preserve Font Awesome */
+.cyberpunk i,
+.cyberpunk .fa,
+.cyberpunk .fas,
+.cyberpunk .far,
+.cyberpunk .fab,
+.cyberpunk .fal,
+.cyberpunk .fad,
+.cyberpunk .fass,
+.cyberpunk .fasr,
+.cyberpunk .fasl,
+.cyberpunk [class*="fa-"],
+.cyberpunk [class^="fa-"],
+.cyberpunk .icon,
+i.fas,
+i.far,
+i.fab,
+i.fal,
+i.fad,
+i.fass,
+i.fasr,
+i.fasl {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro", "Font Awesome 5 Free", "Font Awesome 5 Pro", "Font Awesome 5 Brands", "FontAwesome" !important;
+  font-weight: 900 !important;
+  font-style: normal !important;
+  font-variant: normal !important;
+  text-rendering: auto !important;
+  line-height: 1 !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  display: inline-block !important;
+  text-decoration: none !important;
+  background: none !important;
+  background-color: transparent !important;
+  text-shadow: none !important;
+  filter: none !important;
+  /* Allow color inheritance for functional icons */
+  color: inherit !important;
+}
+
+/* === COMPLETE BLACK BACKGROUND FOR CHAT - MAXIMUM AGGRESSIVENESS === */
+/* Force ALL chat to black - nuclear method */
+#chat,
+#chat *,
+#chat-log,
+#chat-log *,
+#chat-log ol,
+#chat-log ol *,
+#chat-log li,
+#chat-log li * {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+}
+
+#chat {
+  border: 2px solid var(--terminal-border) !important;
+  box-shadow: var(--terminal-glow) !important;
+}
+
+#chat-log {
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* NUCLEAR OVERRIDE FOR BACKGROUND - Apply to absolutely EVERYTHING in chat */
+#chat *,
+#chat-log *,
+#chat-log ol *,
+#chat-log li *,
+#chat-log .message *,
+#chat-log .message-content *,
+#chat-log .message-header *,
+#chat-log div *,
+#chat-log span *,
+#chat-log p *,
+#chat-log a *,
+#chat-log section *,
+#chat-log article *,
+#chat-log header *,
+#chat-log footer * {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  background-attachment: initial !important;
+  background-clip: initial !important;
+  background-origin: initial !important;
+  background-position: initial !important;
+  background-repeat: initial !important;
+  background-size: initial !important;
+}
+
+/* NUCLEAR OVERRIDE FOR TEXT COLOR - Use --terminal-text for normal text */
+#chat-log *,
+#chat-log ol *,
+#chat-log li *,
+#chat-log .message *,
+#chat-log .message-content *,
+#chat-log div *,
+#chat-log span *,
+#chat-log p *,
+#chat-log a *,
+#chat-log section *,
+#chat-log article * {
+  color: var(--terminal-text) !important;
+}
+
+/* Exclude only Font Awesome icons */
+#chat i,
+#chat .fa,
+#chat .fas,
+#chat .far,
+#chat .fab,
+#chat .fal,
+#chat .fad,
+#chat [class*="fa-"],
+#chat [class^="fa-"],
+#chat-log i,
+#chat-log .fa,
+#chat-log .fas,
+#chat-log .far,
+#chat-log .fab,
+#chat-log .fal,
+#chat-log .fad,
+#chat-log [class*="fa-"],
+#chat-log [class^="fa-"] {
+  background: none !important;
+  background-color: transparent !important;
+  color: var(--terminal-primary) !important;
+}
+
+/* Specific colors for chat elements - Use --terminal-primary for highlights */
+#chat-log {
+  color: var(--terminal-text) !important;
+}
+
+/* Individual messages */
+#chat-log .message {
+  border-bottom: 1px solid var(--terminal-secondary) !important;
+  padding: 12px !important;
+  color: var(--terminal-text) !important;
+}
+
+/* Headers and senders - Highlighted */
+#chat-log .message .message-header,
+#chat-log .message .message-sender,
+#chat-log .message-sender {
+  color: var(--terminal-primary) !important;
+  font-weight: bold !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* Message content - Normal text */
+#chat-log .message .message-content,
+#chat-log .message-content {
+  color: var(--terminal-text) !important;
+  font-size: var(--terminal-font-size) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+/* Timestamps and metadata */
+#chat-log .message .message-timestamp,
+#chat-log .message .message-metadata,
+#chat-log .message-timestamp,
+#chat-log .message-metadata {
+  color: var(--terminal-secondary) !important;
+  font-size: calc(var(--terminal-font-size) - 2px) !important;
+}
+
+/* Dice and rolls */
+#chat-log .dice-roll,
+#chat-log .dice-result,
+#chat-log .dice-total {
+  color: var(--terminal-warning) !important;
+  border: 1px solid var(--terminal-border) !important;
+  text-shadow: 0 0 2px var(--terminal-warning) !important;
+}
+
+#chat-log .dice-formula {
+  color: var(--terminal-primary) !important;
+}
+
+/* Whispers */
+#chat-log .whisper-to,
+#chat-log .message.whisper {
+  color: var(--terminal-secondary) !important;
+  border-left: 3px solid var(--terminal-secondary) !important;
+}
+
+/* Flavor text */
+#chat-log .flavor-text {
+  color: var(--terminal-primary) !important;
+  font-style: italic !important;
+}
+
+/* Ultra aggressive universal selector as last resort for background */
+#chat-log>* {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+}
+
+#chat-log>*>* {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+}
+
+#chat-log>*>*>* {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+}
+
+.dice {
+  background-color: var(--terminal-text) !important;
+}
+
+.message-sender {
+  color: var(--terminal-primary) !important;
+}
+
+.flavor-text {
+  color: var(--terminal-text) !important;
+}
+
+.whisper-to {
+  color: var(--terminal-primary) !important;
+}
+
+.message-metadata {
+  color: var(--terminal-primary) !important;
+}
+
+.message-timestamp {
+  color: var(--terminal-primary) !important;
+}
+
+.message-delete i {
+  color: var(--terminal-primary) !important;
+}
+
+.message-content {
+  color: var(--terminal-text) !important;
+}
+
+#chat-log>*>*>*>* {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+}
+
+#chat-form {
+  background-color: var(--terminal-bg) !important;
+  border-top: 2px solid var(--terminal-border) !important;
+}
+
+#chat-message {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+  border: 1px solid var(--terminal-border) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  caret-color: var(--terminal-primary) !important;
+}
+
+/* === STYLES FOR POPUP/ROLL DIALOG - NUCLEAR METHOD === */
+/* Chat popup/notification when chat is not visible */
+#chat-popout,
+.chat-popout,
+#dice-notification,
+.dice-notification,
+#chat .dice-tooltip,
+.dice-tooltip,
+.chat-popup {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  border: 2px solid var(--terminal-border) !important;
+  box-shadow: var(--terminal-glow) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* NUCLEAR METHOD for popup background - Apply to EVERYTHING inside popup */
+#chat-popout *,
+.chat-popout *,
+#dice-notification *,
+.dice-notification *,
+.dice-tooltip *,
+.chat-popup *,
+#chat-popout div *,
+.chat-popout div *,
+#dice-notification div *,
+.dice-notification div *,
+#chat-popout span *,
+.chat-popout span *,
+#dice-notification span *,
+.dice-notification span *,
+#chat-popout p *,
+.chat-popout p *,
+#dice-notification p *,
+.dice-notification p *,
+#chat-popout header *,
+.chat-popout header *,
+#dice-notification header *,
+.dice-notification header * {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  background-attachment: initial !important;
+  background-clip: initial !important;
+  background-origin: initial !important;
+  background-position: initial !important;
+  background-repeat: initial !important;
+  background-size: initial !important;
+}
+
+/* NUCLEAR METHOD for popup text color - Use --terminal-text for normal */
+#chat-popout *,
+.chat-popout *,
+#dice-notification *,
+.dice-notification *,
+.dice-tooltip *,
+.chat-popup *,
+#chat-popout div *,
+.chat-popout div *,
+#dice-notification div *,
+.dice-notification div *,
+#chat-popout span *,
+.chat-popout span *,
+#dice-notification span *,
+.dice-notification span *,
+#chat-popout p *,
+.chat-popout p *,
+#dice-notification p *,
+.dice-notification p *,
+#chat-popout section *,
+.chat-popout section *,
+#dice-notification section *,
+.dice-notification section * {
+  color: var(--terminal-text) !important;
+}
+
+/* Specific popup elements - MORE AGGRESSIVE, highlights with primary */
+#chat-popout .message-header,
+.chat-popout .message-header,
+#dice-notification .message-header,
+.dice-notification .message-header,
+.chat-popup .message-header,
+#chat-popout .message-sender,
+.chat-popout .message-sender,
+#dice-notification .message-sender,
+.dice-notification .message-sender,
+.chat-popup .message-sender,
+#chat-popout header,
+.chat-popout header,
+#dice-notification header,
+.dice-notification header,
+.chat-popup header {
+  color: var(--terminal-primary) !important;
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  font-weight: bold !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+/* Message content in popup - Normal text */
+#chat-popout .message-content,
+.chat-popout .message-content,
+#dice-notification .message-content,
+.dice-notification .message-content,
+.chat-popup .message-content {
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+/* Dice in popup */
+#chat-popout .dice-roll,
+.chat-popout .dice-roll,
+#dice-notification .dice-roll,
+.dice-notification .dice-roll,
+.chat-popup .dice-roll,
+#chat-popout .dice-result,
+.chat-popout .dice-result,
+#dice-notification .dice-result,
+.dice-notification .dice-result,
+.chat-popup .dice-result,
+#chat-popout .dice-total,
+.chat-popout .dice-total,
+#dice-notification .dice-total,
+.dice-notification .dice-total,
+.chat-popup .dice-total {
+  color: var(--terminal-warning) !important;
+  border: 1px solid var(--terminal-border) !important;
+  text-shadow: 0 0 2px var(--terminal-warning) !important;
+  background-color: var(--terminal-bg) !important;
+}
+
+/* Ultra aggressive universal selectors for popup background as last resort */
+#chat-popout>* {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+}
+
+#chat-popout>*>* {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+}
+
+#chat-popout>*>*>* {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+}
+
+.chat-popout>* {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+}
+
+.chat-popout>*>* {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+}
+
+#dice-notification>* {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+}
+
+/* === SPECIFIC STYLES FOR CHAT POPUP - TOTAL BACKGROUND === */
+/* Main popout container - FORCE BLACK BACKGROUND */
+.chat-popout {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  border: 2px solid var(--terminal-border) !important;
+  box-shadow: var(--terminal-glow) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+/* NUCLEAR METHOD - EVERYTHING inside popout black background */
+.chat-popout,
+.chat-popout *,
+.chat-popout div,
+.chat-popout div *,
+.chat-popout span,
+.chat-popout span *,
+.chat-popout section,
+.chat-popout section *,
+.chat-popout article,
+.chat-popout article *,
+.chat-popout header,
+.chat-popout header *,
+.chat-popout main,
+.chat-popout main *,
+.chat-popout .window-content,
+.chat-popout .window-content *,
+.chat-popout .window-app,
+.chat-popout .window-app * {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  background-attachment: initial !important;
+  background-clip: initial !important;
+  background-origin: initial !important;
+  background-position: initial !important;
+  background-repeat: initial !important;
+  background-size: initial !important;
+}
+
+/* NUCLEAR METHOD for popout text color - Normal text */
+.chat-popout div,
+.chat-popout div *,
+.chat-popout span,
+.chat-popout span *,
+.chat-popout section,
+.chat-popout section *,
+.chat-popout article,
+.chat-popout article *,
+.chat-popout main,
+.chat-popout main *,
+.chat-popout .window-content,
+.chat-popout .window-content * {
+  color: var(--terminal-text) !important;
+}
+
+/* Ultra aggressive universal selectors for popout background */
+.chat-popout>* {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+}
+
+.chat-popout>*>* {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+}
+
+.chat-popout>*>*>* {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+}
+
+.chat-popout>*>*>*>* {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+}
+
+/* Style for header - Highlighted */
+.chat-popup-header,
+.chat-popout .window-title,
+.chat-popout-header {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+  border-bottom: 1px solid var(--terminal-border) !important;
+  padding: 10px !important;
+  font-size: var(--terminal-font-size) !important;
+  font-family: var(--terminal-font) !important;
+  font-weight: bold !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+/* Style for chat body - Normal text */
+.chat-popup-body,
+.chat-popout-body,
+.chat-popout .window-content {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+  padding: 15px !important;
+  font-size: var(--terminal-font-size) !important;
+  font-family: var(--terminal-font) !important;
+  max-height: 300px !important;
+  overflow-y: auto !important;
+}
+
+/* Style for chat footer */
+.chat-popup-footer {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  border-top: 1px solid var(--terminal-border) !important;
+  padding: 10px !important;
+  text-align: right !important;
+}
+
+/* Style for messages */
+.chat-popup-message {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  border: 1px solid var(--terminal-border) !important;
+  border-radius: 0px !important;
+  margin: 5px 0 !important;
+  padding: 10px !important;
+  color: var(--terminal-text) !important;
+}
+
+/* Style for buttons */
+.chat-popup-button {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+  border: 1px solid var(--terminal-border) !important;
+  padding: 8px 16px !important;
+  cursor: pointer !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+.chat-popup-button:hover {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-warning) !important;
+  border-color: var(--terminal-warning) !important;
+  text-shadow: 0 0 2px var(--terminal-warning) !important;
+}
+
+#dice-notification>*>* {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+}
+
+/* Timestamps in popup */
+#chat-popout .message-timestamp,
+.chat-popout .message-timestamp,
+#dice-notification .message-timestamp,
+.dice-notification .message-timestamp,
+.chat-popup .message-timestamp {
+  color: var(--terminal-secondary) !important;
+  font-size: calc(var(--terminal-font-size) - 2px) !important;
+  background-color: var(--terminal-bg) !important;
+}
+
+/* === DIALOGS AND FORMS === */
+/* Windows and all their internal elements - Background nuclear */
+.dialog,
+.window-app,
+.dialog *:not(.item-image),
+.window-app *:not(.item-image),
+.dialog .window-frame,
+.window-app .window-frame,
+.dialog .window-header,
+.window-app .window-header,
+.dialog .window-content,
+.window-app .window-content,
+.dialog .window-resizable-handle,
+.window-app .window-resizable-handle {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+}
+
+/* Window content - Normal text */
+.dialog .window-content,
+.window-app .window-content {
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* Forms and internal dialogs - Normal text */
+.dialog .dialog-content,
+.window-app form,
+.dialog form,
+.window-app .window-content form {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+}
+
+/* Dialog buttons */
+.dialog .dialog-buttons,
+.window-app .dialog-buttons {
+  background-color: var(--terminal-bg) !important;
+  border-top: 1px solid var(--terminal-border) !important;
+}
+
+/* Inputs and selects in forms - Cambio aquí: usa --terminal-text para texto normal, no primary */
+.dialog input:not([type="checkbox"]):not([type="radio"]),
+.window-app input:not([type="checkbox"]):not([type="radio"]),
+.dialog textarea,
+.window-app textarea,
+.dialog select,
+.window-app select {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+  /* ¡Cambiado a --terminal-text para que use el color de texto normal! */
+  border: 1px solid var(--terminal-border) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* Exclude icons from forced background styles */
+.dialog *:not(i):not(.fa):not(.fas):not(.far):not(.fab):not(.fal):not(.fad):not([class*="fa-"]):not([class^="fa-"]),
+.window-app *:not(i):not(.fa):not(.fas):not(.far):not(.fab):not(.fal):not(.fad):not([class*="fa-"]):not([class^="fa-"]) {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+}
+
+/* Additional aggressive rules for normal text in forms and windows */
+.window-content label,
+.window-content p,
+.window-content span,
+.window-content div:not(.message-header):not(.message-sender):not(header),
+.form-group label,
+.form-group span,
+.form-group p,
+.form-group div,
+.dialog-content label,
+.dialog-content p,
+.dialog-content span,
+.dialog-content div {
+  color: var(--terminal-text) !important;
+}
+
+/* === ICONS WITH SPECIFIC COLORS === */
+/* Delete icons - Bright red */
+a[data-action="delete"] i,
+.item-delete i,
+.control-icon.delete i,
+a[title*="Delete"] i,
+a[title*="Eliminar"] i,
+.fa-trash:before,
+.fa-times:before,
+.fa-close:before {
+  color: #ff4444 !important;
+  text-shadow: 0 0 3px #ff4444, 0 0 6px #ff4444 !important;
+}
+
+/* Edit icons - Bright blue */
+a[data-action="edit"] i,
+.item-edit i,
+.control-icon.edit i,
+a[title*="Edit"] i,
+a[title*="Editar"] i,
+.fa-edit:before,
+.fa-pencil:before,
+.fa-pencil-alt:before {
+  color: #4488ff !important;
+  text-shadow: 0 0 3px #4488ff, 0 0 6px #4488ff !important;
+}
+
+/* Configure icons - Yellow */
+a[data-action="configure"] i,
+.item-config i,
+.control-icon.configure i,
+.fa-cog:before,
+.fa-gear:before,
+.fa-settings:before {
+  color: #ffaa00 !important;
+  text-shadow: 0 0 3px #ffaa00, 0 0 6px #ffaa00 !important;
+}
+
+/* View icons - Light green */
+a[data-action="view"] i,
+.item-view i,
+.control-icon.view i,
+.fa-eye:before {
+  color: #00dd00 !important;
+  text-shadow: 0 0 3px #00dd00, 0 0 6px #00dd00 !important;
+}
+
+/* Duplicate icons - Cyan */
+a[data-action="duplicate"] i,
+.item-duplicate i,
+.control-icon.duplicate i,
+.fa-copy:before,
+.fa-clone:before {
+  color: #00dddd !important;
+  text-shadow: 0 0 3px #00dddd, 0 0 6px #00dddd !important;
+}
+
+/* Icons in right sidebar */
+#sidebar .directory-item .item-controls a[data-action="edit"] i {
+  color: #4488ff !important;
+  text-shadow: 0 0 2px #4488ff !important;
+}
+
+#sidebar .directory-item .item-controls a[data-action="delete"] i {
+  color: #ff4444 !important;
+  text-shadow: 0 0 2px #ff4444 !important;
+}
+
+#sidebar .directory-item .item-controls a[data-action="duplicate"] i {
+  color: #00dddd !important;
+  text-shadow: 0 0 2px #00dddd !important;
+}
+
+#sidebar .directory-item .item-controls a[data-action="configure"] i {
+  color: #ffaa00 !important;
+  text-shadow: 0 0 2px #ffaa00 !important;
+}
+
+/* Tool icons in left bar - different colors */
+#controls .control-tool:nth-child(1) i {
+  color: #ff6666 !important;
+  text-shadow: 0 0 3px #ff6666 !important;
+}
+
+#controls .control-tool:nth-child(2) i {
+  color: #66ff66 !important;
+  text-shadow: 0 0 3px #66ff66 !important;
+}
+
+#controls .control-tool:nth-child(3) i {
+  color: #6666ff !important;
+  text-shadow: 0 0 3px #6666ff !important;
+}
+
+#controls .control-tool:nth-child(4) i {
+  color: #ffff66 !important;
+  text-shadow: 0 0 3px #ffff66 !important;
+}
+
+#controls .control-tool:nth-child(5) i {
+  color: #ff66ff !important;
+  text-shadow: 0 0 3px #ff66ff !important;
+}
+
+#controls .control-tool:nth-child(6) i {
+  color: #66ffff !important;
+  text-shadow: 0 0 3px #66ffff !important;
+}
+
+#controls .control-tool:nth-child(7) i {
+  color: #ffaa66 !important;
+  text-shadow: 0 0 3px #ffaa66 !important;
+}
+
+#controls .control-tool:nth-child(8) i {
+  color: #aa66ff !important;
+  text-shadow: 0 0 3px #aa66ff !important;
+}
+
+/* Default icons - Terminal green */
+i:not([class*="fa-"]):not(.colored-icon),
+.fas:not(.colored-icon),
+.far:not(.colored-icon),
+.fab:not(.colored-icon) {
+  color: var(--terminal-primary) !important;
+}
+
+/* Specific Foundry VTT icons */
+.fa-dice-d20:before {
+  color: #ff6b6b !important;
+  text-shadow: 0 0 3px #ff6b6b !important;
+}
+
+.fa-crosshairs:before {
+  color: #4ecdc4 !important;
+  text-shadow: 0 0 3px #4ecdc4 !important;
+}
+
+.fa-users:before {
+  color: #45b7d1 !important;
+  text-shadow: 0 0 3px #45b7d1 !important;
+}
+
+.fa-map:before {
+  color: #96ceb4 !important;
+  text-shadow: 0 0 3px #96ceb4 !important;
+}
+
+.fa-music:before {
+  color: #feca57 !important;
+  text-shadow: 0 0 3px #feca57 !important;
+}
+
+.fa-scroll:before {
+  color: #ff9ff3 !important;
+  text-shadow: 0 0 3px #ff9ff3 !important;
+}
+
+.fa-book:before {
+  color: #54a0ff !important;
+  text-shadow: 0 0 3px #54a0ff !important;
+}
+
+.fa-toolbox:before {
+  color: #5f27cd !important;
+  text-shadow: 0 0 3px #5f27cd !important;
+}
+
+/* Sidebar with standard icons */
+#sidebar .directory-item .entry-name {
+  color: var(--terminal-text) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+#sidebar .directory-item {
+  background-color: var(--terminal-bg) !important;
+}
+
+#sidebar .directory-item:nth-child(odd) {
+  background-color: rgba(0, 204, 0, 0.03) !important;
+}
+
+#sidebar .directory-item:nth-child(even) {
+  background-color: rgba(0, 170, 0, 0.03) !important;
+}
+
+/* Custom scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--terminal-primary) var(--terminal-bg);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: var(--terminal-bg);
+  border: 1px solid var(--terminal-secondary);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--terminal-primary);
+  border-radius: 0px;
+  box-shadow: inset 0 0 3px var(--terminal-secondary);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--terminal-secondary);
+  box-shadow: var(--terminal-glow);
+}
+
+/* Animation effects */
+@keyframes blink {
+
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Main content of windows */
+.cyberpunk section.window-content {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text);
+  font-weight: normal;
+  font-size: var(--terminal-font-size) !important;
+  overflow-y: scroll;
+  position: relative;
+  border: 2px solid var(--terminal-border);
+  box-shadow: var(--terminal-glow);
+}
+
+/* Text fields */
+.cyberpunk .editor-content {
+  background-color: var(--terminal-bg);
+  color: var(--terminal-text);
+  border: 1px solid var(--terminal-border);
+  padding: 8px;
+  font-size: var(--terminal-font-size) !important;
+  text-shadow: var(--terminal-text-shadow);
+}
+
+/* Tab navigation */
+.cyberpunk section.window-content nav.tabs {
+  border-bottom: 2px solid var(--terminal-border);
+  background-color: var(--terminal-bg);
+  padding: 0;
+}
+
+.cyberpunk section.window-content nav.tabs>.item {
+  background-color: var(--terminal-bg);
+  color: var(--terminal-secondary);
+  border: 1px solid var(--terminal-dim);
+  margin-right: 2px;
+  padding: 8px 14px;
+  font-size: var(--terminal-font-size) !important;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.cyberpunk section.window-content nav.tabs>.item::before {
+  content: '[ ';
+}
+
+.cyberpunk section.window-content nav.tabs>.item::after {
+  content: ' ]';
+}
+
+.cyberpunk section.window-content nav.tabs>.item.active {
+  color: var(--terminal-primary);
+  background-color: var(--terminal-bg);
+  border-color: var(--terminal-border);
+  box-shadow: var(--terminal-glow);
+  text-shadow: var(--terminal-text-shadow);
+}
+
+.cyberpunk section.window-content nav.tabs>.item:hover {
+  color: var(--terminal-primary);
+  border-color: var(--terminal-secondary);
+  text-shadow: var(--terminal-text-shadow);
+}
+
+/* Main titles */
+.cyberpunk h1.title,
+.cyberpunk h2 {
+  font-family: var(--terminal-font);
+  font-size: calc(var(--terminal-font-size) + 4px) !important;
+  color: var(--terminal-primary);
+  text-shadow: var(--terminal-text-shadow);
+  border-bottom: 1px solid var(--terminal-border);
+  position: relative;
+  padding-left: 20px;
+}
+
+.cyberpunk h1.title::before,
+.cyberpunk h2::before {
+  content: '> ';
+  position: absolute;
+  left: 0;
+  color: var(--terminal-primary);
+  animation: blink 2s infinite;
+}
+
+.cyberpunk h1.title>input {
+  background-color: transparent;
+  border: none;
+  color: var(--terminal-text);
+  font-family: var(--terminal-font);
+  font-size: calc(var(--terminal-font-size) + 4px) !important;
+  font-weight: bold;
+  text-shadow: var(--terminal-text-shadow);
+}
+
+/* Buttons */
+button,
+.button {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+  border: 1px solid var(--terminal-border) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+  transition: all 0.3s ease !important;
+  padding: 6px 12px !important;
+}
+
+button:hover,
+.button:hover {
+  box-shadow: var(--terminal-glow) !important;
+  color: var(--terminal-bg) !important;
+  background-color: var(--terminal-primary) !important;
+}
+
+/* === FIX FOR WHITE/GRAY SEPARATOR LINES === */
+
+/* Specific form separators */
+hr,
+.separator,
+.divider,
+.form-group+.form-group,
+.form-fields .form-group,
+section.window-content .form-group {
+  border-color: var(--terminal-border) !important;
+  border-top-color: var(--terminal-border) !important;
+  border-bottom-color: var(--terminal-border) !important;
+}
+
+/* Horizontal lines */
+hr {
+  background-color: var(--terminal-border) !important;
+  border: 1px solid var(--terminal-border) !important;
+  color: var(--terminal-border) !important;
+}
+
+/* Form containers */
+.form-group,
+.form-fields,
+.form-header,
+fieldset {
+  border-color: var(--terminal-border) !important;
+  border-top: 1px solid var(--terminal-border) !important;
+  border-bottom: 1px solid var(--terminal-border) !important;
+}
+
+/* Specific Foundry elements */
+.window-content form,
+.window-content .form-group,
+.window-content .form-fields,
+section.tab[data-tab] {
+  border-color: var(--terminal-border) !important;
+}
+
+/* Separators in tabs */
+nav.tabs,
+nav.tabs .item,
+.tabs-content .tab {
+  border-color: var(--terminal-border) !important;
+}
+
+/* Elements with inline or default borders */
+[style*="border"],
+[style*="border-top"],
+[style*="border-bottom"],
+[style*="border-left"],
+[style*="border-right"] {
+  border-color: var(--terminal-border) !important;
+}
+
+/* Outline for focused elements */
+*:focus {
+  outline-color: var(--terminal-primary) !important;
+  box-shadow: 0 0 3px var(--terminal-primary) !important;
+}
+
+/* === CORRECTED WOUND TRACKER - INTERACTIVE AND VISUAL === */
+.wound-tracker {
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 2;
+  margin-right: -3px;
+}
+
+.wound-tracker .wound-state {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  height: fit-content;
+  margin-right: 3px;
+  margin-top: 5px;
+  border: solid var(--terminal-border);
+  border-width: 0px 2px 2px 2px;
+}
+
+.wound-tracker .wound-state-label {
+  background-color: var(--terminal-bg);
+  color: var(--terminal-text);
+  font-size: smaller;
+  font-variant: small-caps;
+  padding: 2px;
+  padding-left: 2px;
+}
+
+.wound-tracker .damageholder {
+  display: flex;
+  flex-grow: 1;
+  height: 0.5em;
+}
+
+/* Interactive damage box */
+.wound-tracker .damage {
+  position: relative;
+  height: 100%;
+  width: 1.3em;
+  flex-grow: 1;
+  border-style: solid;
+  border-width: 0px 1px 0px 1px;
+  border-color: var(--terminal-border);
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+/* Visual layer for damage color */
+.wound-tracker .damage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: transparent;
+  z-index: 1;
+  pointer-events: none;
+  /* doesn't block clicks */
+}
+
+/* Filled box */
+.wound-tracker .damage.filled::before {
+  background-color: var(--terminal-error);
+}
+
+/* Empty box */
+.wound-tracker .damage.unfilled::before {
+  background-color: transparent;
+}
+
+/* Hover: highlight */
+.wound-tracker .damage:hover::before {
+  background-color: rgba(204, 0, 0, 0.5);
+}
+
+/* Separators */
+.wound-tracker .damage+.damage {
+  border-left-width: 0px;
+}
+
+.wound-tracker .damage.leftmost {
+  border-left-width: 0px;
+}
+
+.wound-tracker .damage.rightmost {
+  border-right-width: 0px;
+}
+
+/* Hide unnecessary styles */
+.wound-tracker .damage:checked {
+  filter: none;
+}
+
+/* Chip toggle container */
+.field.skill label.chip-toggle {
+  background-color: var(--terminal-bg);
+  display: flex;
+  align-items: center;
+  padding-right: 3px;
+  position: relative;
+  /* needed for pseudo-element */
+  cursor: pointer;
+}
+
+/* Text inside chip */
+.field.skill label.chip-toggle>* {
+  font-variant: all-small-caps;
+}
+
+/* Hidden checkbox */
+.field.skill input[type=checkbox] {
+  display: none;
+}
+
+/* Chip image using pseudo-element */
+.field.skill label.chip-toggle .chip-icon::before {
+  content: "";
+  display: block;
+  width: 1.5em;
+  height: 1.5em;
+  background-image: url(../img/chip.png);
+  background-size: cover;
+  background-position: center;
+  transition: opacity 0.2s ease-in-out;
+  opacity: 1;
+  /* activated state */
+}
+
+/* Activated chip */
+.field.skill input[type=checkbox]:checked+.chip-icon::before {
+  opacity: 1;
+  /* fully visible */
+}
+
+/* SEARCH ICON */
+.skill-top-matter div.search-icon {
+  background-color: var(--terminal-bg) !important;
+  background-image: url("../img/search.png") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  height: 1.5em;
+  width: 1.5em;
+  display: inline-block;
+  z-index: 11;
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+*:not(.message-timestamp),
+*:not(.message-timestamp)::before,
+*:not(.message-timestamp)::after {
+  border-color: var(--terminal-border) !important;
+}
+
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  :root {
+    --terminal-font-size: 18px;
+  }
+}
+
+.app.window-app {
+  border: 2px solid var(--terminal-primary) !important;
+  box-shadow: var(--terminal-glow) !important;
+}
+
+css
+
+/* === DICE TRAY OVERRIDE - MÁXIMA ESPECIFICIDAD === */
+#chat .dice-tray__button .dice,
+#chat .dice-tray .dice-tray__button .dice,
+.dice-tray .dice-tray__button .dice {
+  background-color: var(--terminal-primary) !important;
+  background: var(--terminal-primary) !important;
+  background-image: none !important;
+}
+
+#chat .dice-tray__button:hover .dice,
+#chat .dice-tray .dice-tray__button:hover .dice,
+.dice-tray .dice-tray__button:hover .dice {
+  background-color: var(--terminal-warning) !important;
+  background: var(--terminal-warning) !important;
+}
+
+/* === DICE ROLL TOTAL FIX === */
+.dice-roll .total,
+.dice-total .total,
+.roll-total .total,
+#chat .dice-roll .total,
+#chat .dice-total .total {
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  font-weight: bold !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+.dice-roll,
+.dice-result,
+.roll-total,
+#chat .dice-roll,
+#chat .dice-result {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+/* === DESCRIPTION HEADER AND LABELS FIX === */
+.description-header,
+.property-group label,
+.combat-properties label,
+.general-notes label {
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+h3.description-header {
+  color: var(--terminal-primary) !important;
+  font-weight: bold !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+/* === PLACEHOLDER TEXT STYLING - USE TERMINAL DIM COLOR === */
+input[type="text"]::placeholder,
+input[type="number"]::placeholder,
+textarea::placeholder {
+  color: var(--terminal-dim) !important;
+  opacity: 1 !important;
+}
+
+/* Específico para los inputs mencionados */
+input[name="system.attributes.space"]::placeholder,
+input.ability-drain::placeholder,
+input.temphp::placeholder,
+input.singleLine::placeholder,
+input[name="system.details.biography.dateOfBirth"]::placeholder,
+input[name="system.details.biography.genderPronouns"]::placeholder {
+  color: var(--terminal-dim) !important;
+  opacity: 1 !important;
+}
+
+/* texto ingresado también sea dim cuando está vacío */
+input[type="text"]:placeholder-shown,
+input[type="number"]:placeholder-shown {
+  color: var(--terminal-dim) !important;
+}
+
+
+
+
+/* === CHAT LOG THEMED === */
+ol.chat-log.plain.themed.theme-light,
+ol.chat-log.plain.themed,
+ol.chat-log.themed {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+}
+
+/* === CHAT MESSAGE === */
+.chat-message.message.flexcol,
+.chat-message.message.flexcol.hovered,
+li.chat-message.message.flexcol,
+li.chat-message.message.flexcol.hovered {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+}
+
+/* Todos los elementos internos del mensaje */
+.chat-message.message.flexcol *,
+.chat-message.message.flexcol.hovered * {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+}
+
+
+/* === SEARCH INPUT === */
+input.search-input[type="search"],
+input.search-input {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-dim) !important;
+  border: 1px solid var(--terminal-border) !important;
+}
+
+input.search-input[type="search"]::placeholder,
+input.search-input::placeholder {
+  color: var(--terminal-dim) !important;
+  opacity: 1 !important;
+}
+
+/* === ACTION IMAGE FIX === */
+.action-image.small,
+div.action-image.small {
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  width: 25px !important;
+  height: 25px !important;
+  min-width: 25px !important;
+  min-height: 25px !important;
+  flex: 0 0 25px !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Si está dentro de un contenedor con fondo */
+.action-image.small {
+  background-color: transparent !important;
+}
+
+/* === TAB LINKS FIX === */
+a[data-action="tab"],
+a[data-group="primary"],
+nav a[data-tab] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-secondary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+a[data-action="tab"].active,
+a[data-group="primary"].active,
+nav a[data-tab].active {
+  color: var(--terminal-primary) !important;
+  background-color: var(--terminal-bg) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+a[data-action="tab"]:hover,
+a[data-group="primary"]:hover,
+nav a[data-tab]:hover {
+  color: var(--terminal-primary) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+a[data-action="tab"] span,
+a[data-group="primary"] span {
+  color: inherit !important;
+  background-color: transparent !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* === HEADER SECTIONS FIX === */
+.header,
+div.header {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-primary) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* === CONDITIONS FIX === */
+.condition,
+div.condition {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  font-family: var(--terminal-font) !important;
+}
+
+.condition label,
+div.condition label {
+  background-color: transparent !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+.condition .pips {
+  background-color: transparent !important;
+}
+
+.condition .pip,
+.pip[data-action="toggleConditionPip"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+}
+
+/* Pip marcado con clase filled */
+.condition .pip.filled,
+.pip[data-action="toggleConditionPip"].filled {
+  background-color: var(--terminal-error) !important;
+  background: var(--terminal-error) !important;
+}
+
+/* Hover para feedback visual */
+.condition .pip:hover,
+.pip[data-action="toggleConditionPip"]:hover {
+  border-color: var(--terminal-primary) !important;
+}
+
+/* === ALL SELECT ELEMENTS FIX === */
+/* Captura TODOS los select, tengan o no clase */
+select,
+select[name*="system"],
+select[type="text"],
+select[name*="combat"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* Todas las opciones de cualquier select */
+select option {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* Hover en select */
+select:hover {
+  border-color: var(--terminal-primary) !important;
+}
+
+/* === SELECT DROPDOWNS FIX === */
+select.add-effect,
+select[class*="add-"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+select.add-effect option,
+select[class*="add-"] option {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* === SCRIPT SECTIONS FIX === */
+.script,
+div.script,
+div[data-index] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  font-family: var(--terminal-font) !important;
+}
+
+.script label,
+div.script label {
+  background-color: transparent !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+.script label a,
+a[data-action="editScript"],
+a[data-action="deleteScript"] {
+  background-color: transparent !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+a[data-action="editScript"]:hover {
+  color: var(--terminal-warning) !important;
+}
+
+a[data-action="deleteScript"]:hover {
+  color: var(--terminal-error) !important;
+}
+
+a[data-action="editScript"] i,
+a[data-action="deleteScript"] i {
+  color: inherit !important;
+}
+
+/* === WINDOW TITLE FIX === */
+h1.window-title,
+.window-title {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: calc(var(--terminal-font-size) + 4px) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+/* === ROW CONTENT FIX === */
+.row-content,
+div.row-content {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  font-family: var(--terminal-font) !important;
+}
+
+/* === LIST NAME FIX === */
+.list-name,
+div.list-name {
+  background-color: transparent !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* Enlaces dentro de list-name */
+.list-name a,
+div.list-name a,
+a.label,
+a[data-action="toggleSummary"],
+a[data-action="rollTest"] {
+  background-color: transparent !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+.list-name a:hover,
+a.label:hover,
+a[data-action="toggleSummary"]:hover,
+a[data-action="rollTest"]:hover {
+  color: var(--terminal-warning) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+/* List-name rollable */
+.list-name.rollable,
+div.list-name.rollable {
+  cursor: pointer !important;
+}
+
+.list-name.rollable:hover {
+  color: var(--terminal-primary) !important;
+}
+
+/* === LIST CONTROLS FIX === */
+.list-controls,
+div.list-controls {
+  background-color: transparent !important;
+}
+
+.list-controls a,
+a.list-control,
+a[data-action="toggleProperty"],
+a[data-action="deleteEmbedded"],
+a[data-action="createItem"],
+a[data-action="createFaction"],
+a[data-action="deleteFaction"] {
+  background-color: transparent !important;
+  color: var(--terminal-primary) !important;
+}
+
+.list-controls a:hover,
+a.list-control:hover,
+a[data-action="createItem"]:hover,
+a[data-action="createFaction"]:hover {
+  color: var(--terminal-warning) !important;
+}
+
+a[data-action="deleteEmbedded"]:hover,
+a[data-action="deleteFaction"]:hover {
+  color: var(--terminal-error) !important;
+}
+
+/* Inactive controls */
+.list-controls a.inactive,
+a.list-control.inactive {
+  opacity: 0.5 !important;
+}
+
+/* === LIST HEADER FIX === */
+.list-header,
+div.list-header {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+.list-header .small,
+div.list-header .small,
+.list-header .flex,
+div.list-header .flex {
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: calc(var(--terminal-font-size) - 2px) !important;
+}
+
+.list-header .flex.large {
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* === LIST ROW FIX === */
+.list-row,
+div.list-row {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  font-family: var(--terminal-font) !important;
+}
+
+.list-row .flex,
+div.list-row .flex {
+  font-family: var(--terminal-font) !important;
+  color: var(--terminal-text) !important;
+}
+
+.list-row a,
+div.list-row a,
+a[data-action="expandFaction"] {
+  background-color: transparent !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+.list-row a:hover,
+a[data-action="expandFaction"]:hover {
+  color: var(--terminal-warning) !important;
+}
+
+/* === LIST CONTENT FIX === */
+.list-content,
+div.list-content {
+  background-color: var(--terminal-bg) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+/* === DETAIL GROUP FIX === */
+.detail-group,
+div.detail-group {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  font-family: var(--terminal-font) !important;
+}
+
+.detail-group label,
+div.detail-group label {
+  background-color: transparent !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+.detail-group .input-group,
+.input-group {
+  background-color: transparent !important;
+}
+
+.detail-group input,
+.input-group input {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* === LABEL FIX === */
+.label,
+div.label {
+  background-color: transparent !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+.label label,
+div.label label {
+  background-color: transparent !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* Label centered */
+label.centered,
+.label label.centered {
+  text-align: center !important;
+}
+
+/* Label missing */
+label.missing,
+.label.missing {
+  color: var(--terminal-dim) !important;
+  font-style: italic !important;
+}
+
+/* === DETAILS ROW NAME FIX === */
+.details-row,
+div.details-row {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  font-family: var(--terminal-font) !important;
+}
+
+.details-row.name,
+div.details-row.name {
+  background-color: var(--terminal-bg) !important;
+}
+
+.details-row input,
+.details-row.name input {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* === HEADER DETAILS FIX === */
+.header-details,
+div.header-details {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  font-family: var(--terminal-font) !important;
+}
+
+/* === PROSE MIRROR (EDITOR) FIX === */
+prose-mirror,
+prose-mirror.editor,
+.prosemirror {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  font-family: var(--terminal-font) !important;
+}
+
+prose-mirror .editor-content,
+.prosemirror .editor-content {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+prose-mirror button,
+.prosemirror button {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+}
+
+/* === FIELD FIX === */
+.field,
+div.field {
+  background-color: transparent !important;
+  font-family: var(--terminal-font) !important;
+}
+
+.field select,
+div.field select {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+.field select option {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+.field input[type="number"],
+.field input[type="text"],
+div.field input[type="number"],
+div.field input[type="text"] {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* === DESCRIPTION FIX === */
+.description,
+div.description {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+.description p,
+div.description p {
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* === ENTRY NAME FIX === */
+a.entry-name,
+.entry-name {
+  background-color: transparent !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+a.entry-name:hover,
+a[data-action="activateEntry"]:hover {
+  color: var(--terminal-warning) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+/* === FOLDER NAME FIX === */
+.folder-name,
+span.folder-name {
+  background-color: transparent !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* === ELLIPSIS FIX === */
+.ellipsis {
+  font-family: var(--terminal-font) !important;
+}
+
+/* === SEARCH INPUT FIX === */
+input[type="search"],
+input[name="search"] {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+input[type="search"]::placeholder,
+input[name="search"]::placeholder {
+  color: var(--terminal-dim) !important;
+}
+
+/* === INLINE CONTROL BUTTONS FIX === */
+button.inline-control,
+button.toggle-search-mode {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+}
+
+button.inline-control:hover {
+  color: var(--terminal-warning) !important;
+}
+
+button.inline-control[disabled],
+button.inline-control:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+/* === STRONG (BOLD TEXT) FIX === */
+strong,
+strong.ellipsis {
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* === FORM GROUP FIX === */
+.form-group,
+div.form-group {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  font-family: var(--terminal-font) !important;
+}
+
+.form-group label,
+div.form-group label {
+  background-color: transparent !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+.form-group .form-fields,
+.form-fields {
+  background-color: transparent !important;
+}
+
+.form-group select,
+.form-fields select {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+.form-group select option,
+.form-fields select option {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+/* === TABLE FIX === */
+table,
+table.characteristic-table,
+table.flexcol {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  font-family: var(--terminal-font) !important;
+  color: var(--terminal-text) !important;
+}
+
+table tbody,
+table thead,
+table tfoot,
+tbody.scrollable {
+  background-color: var(--terminal-bg) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+table tr,
+tr.flexrow {
+  background-color: var(--terminal-bg) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+table td,
+table th,
+td.image,
+td.range,
+td.details,
+td.controls,
+th.image,
+th.range,
+th.details,
+th.controls {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* Enlaces dentro de tablas */
+table td a,
+table th a,
+td.details a,
+a.content-link {
+  background-color: transparent !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+table td a:hover,
+table th a:hover,
+a.content-link:hover {
+  color: var(--terminal-warning) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+/* Inputs dentro de tablas */
+table td input,
+table th input,
+table input[type="number"] {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* Botones dentro de tablas */
+table button,
+td.controls button,
+button[data-action="lockResult"],
+button[data-action="drawSpecificResult"] {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+table button:hover,
+td.controls button:hover {
+  color: var(--terminal-warning) !important;
+}
+
+table button[disabled],
+table button:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+/* Hover icon dentro de tablas */
+table .hover-icon,
+.hover-icon {
+  background-color: transparent !important;
+  font-family: var(--terminal-font) !important;
+}
+
+.hover-icon a {
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+.hover-icon a:hover {
+  color: var(--terminal-warning) !important;
+}
+
+/* === ATTRIBUTE ROW FIX === */
+.attribute-row,
+div.attribute-row {
+  background-color: var(--terminal-bg) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+/* === ATTRIBUTE BOX FIX === */
+.attribute-box,
+div.attribute-box {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  font-family: var(--terminal-font) !important;
+}
+
+.attribute-box.top-label {
+  background-color: var(--terminal-bg) !important;
+}
+
+.attribute-box label,
+div.attribute-box label {
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* === PATRON FIX === */
+.patron,
+div.patron {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  font-family: var(--terminal-font) !important;
+}
+
+.patron label,
+div.patron label {
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+.patron.droppable {
+  cursor: pointer !important;
+}
+
+/* === SHEET LIST FIX === */
+.sheet-list,
+div.sheet-list {
+  background-color: var(--terminal-bg) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+.sheet-list.influence {
+  background-color: var(--terminal-bg) !important;
+}
+
+/* === DROPDOWN CONTENT FIX === */
+.dropdown-content,
+div.dropdown-content {
+  background-color: var(--terminal-bg) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+.dropdown-container,
+div.dropdown-container {
+  background-color: var(--terminal-bg) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+.dropdown-container button,
+div.dropdown-container button {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+.dropdown-container button:hover {
+  color: var(--terminal-warning) !important;
+}
+
+/* === COLLAPSED FIX === */
+.collapsed,
+div.collapsed {
+  background-color: var(--terminal-bg) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+/* === INFLUENCE SOURCES FIX === */
+.influence-sources,
+div.influence-sources {
+  background-color: var(--terminal-bg) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+/* === SECTION TAB FIX === */
+section.tab,
+section[data-tab] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  font-family: var(--terminal-font) !important;
+}
+
+/* === FLEXROW Y FLEXCOL FIX === */
+.flexrow,
+.flexcol {
+  font-family: var(--terminal-font) !important;
+}
+
+/* === SCROLLABLE FIX === */
+.scrollable {
+  background-color: var(--terminal-bg) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+/* === SHEET HEADER FIX === */
+.sheet-header,
+header.sheet-header {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  font-family: var(--terminal-font) !important;
+  color: var(--terminal-text) !important;
+}
+
+/* Todos los elementos dentro del sheet-header */
+.sheet-header *:not(i):not(.fa):not(.fas):not(.far):not(.fab):not([class*="fa-"]):not([class^="fa-"]),
+header.sheet-header *:not(i):not(.fa):not(.fas):not(.far):not(.fab):not([class*="fa-"]):not([class^="fa-"]) {
+  font-family: var(--terminal-font) !important;
+}
+
+/* H1 dentro del header */
+.sheet-header h1,
+header.sheet-header h1 {
+  background-color: transparent !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: calc(var(--terminal-font-size) + 6px) !important;
+  font-weight: bold !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+/* H4 dentro del header */
+.sheet-header h4,
+header.sheet-header h4 {
+  background-color: transparent !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: calc(var(--terminal-font-size) + 2px) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+/* Botones dentro del sheet-header */
+.sheet-header button,
+header.sheet-header button {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+  border: 1px solid var(--terminal-border) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+  transition: all 0.3s ease !important;
+  padding: 6px 12px !important;
+}
+
+.sheet-header button:hover,
+header.sheet-header button:hover {
+  box-shadow: var(--terminal-glow) !important;
+  color: var(--terminal-bg) !important;
+  background-color: var(--terminal-primary) !important;
+}
+
+/* Span dentro de botones del header */
+.sheet-header button span,
+header.sheet-header button span {
+  background-color: transparent !important;
+  color: inherit !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* Iconos dentro del sheet-header - mantener Font Awesome */
+.sheet-header i,
+.sheet-header .fa,
+.sheet-header .fas,
+.sheet-header .far,
+.sheet-header .fab,
+header.sheet-header i,
+header.sheet-header .fa,
+header.sheet-header .fas,
+header.sheet-header .far,
+header.sheet-header .fab {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro", "Font Awesome 5 Free", "Font Awesome 5 Pro", "FontAwesome" !important;
+  font-weight: 900 !important;
+  color: inherit !important;
+  background: none !important;
+  background-color: transparent !important;
+}
+
+/* Imagen dentro del header */
+.sheet-header img,
+header.sheet-header img {
+  background-color: transparent !important;
+  border: 1px solid var(--terminal-border) !important;
+}
+
+/* === HEADERS FIX (H1-H6) === */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--terminal-font) !important;
+  color: var(--terminal-primary) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+  font-weight: bold !important;
+}
+
+/* Tamaños específicos para cada nivel */
+h1 {
+  font-size: calc(var(--terminal-font-size) + 8px) !important;
+}
+
+h2 {
+  font-size: calc(var(--terminal-font-size) + 6px) !important;
+}
+
+h3 {
+  font-size: calc(var(--terminal-font-size) + 4px) !important;
+}
+
+h4 {
+  font-size: calc(var(--terminal-font-size) + 2px) !important;
+}
+
+h5 {
+  font-size: calc(var(--terminal-font-size) + 1px) !important;
+}
+
+h6 {
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* Headers con data-anchor */
+h1[data-anchor],
+h2[data-anchor],
+h3[data-anchor],
+h4[data-anchor],
+h5[data-anchor],
+h6[data-anchor] {
+  font-family: var(--terminal-font) !important;
+  color: var(--terminal-primary) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+/* === KEYWORD FIX === */
+.keyword,
+div.keyword {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  font-family: var(--terminal-font) !important;
+}
+
+.keyword a,
+div.keyword a,
+a[data-action="editEmbedded"] {
+  background-color: transparent !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+.keyword a:hover,
+a[data-action="editEmbedded"]:hover {
+  color: var(--terminal-warning) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+/* Context menu classes */
+.context-menu-alt {
+  background-color: var(--terminal-bg) !important;
+}
+
+/* === CONTEXT MENU FIX === */
+menu,
+menu.context-items {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  font-family: var(--terminal-font) !important;
+}
+
+menu li,
+li.context-item {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+menu li:hover,
+li.context-item:hover {
+  background-color: var(--terminal-secondary) !important;
+  color: var(--terminal-primary) !important;
+}
+
+menu li span,
+li.context-item span {
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+menu li:hover span,
+li.context-item:hover span {
+  color: var(--terminal-primary) !important;
+}
+
+menu li i,
+li.context-item i {
+  color: var(--terminal-primary) !important;
+}
+
+menu li:hover i,
+li.context-item:hover i {
+  color: var(--terminal-warning) !important;
+}
+
+/* === GLOW EFFECT FOR SELECTED DICE === */
+a.die.selected {
+  box-shadow: 0 0 10px var(--terminal-primary),
+    0 0 20px var(--terminal-primary),
+    0 0 30px var(--terminal-primary) !important;
+  border: 2px solid var(--terminal-primary) !important;
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+a.die.selected img {
+  filter: brightness(1.3) drop-shadow(0 0 5px var(--terminal-primary));
+}
+
+/* Animation for pulsing glow effect */
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 10px var(--terminal-primary),
+      0 0 20px var(--terminal-primary),
+      0 0 30px var(--terminal-primary);
+  }
+
+  50% {
+    box-shadow: 0 0 15px var(--terminal-primary),
+      0 0 30px var(--terminal-primary),
+      0 0 45px var(--terminal-primary);
+  }
+}
+
+/* Specific for failed dice */
+a.die.failed.selected {
+  box-shadow: 0 0 10px var(--terminal-error),
+    0 0 20px var(--terminal-error),
+    0 0 30px var(--terminal-error) !important;
+  border-color: var(--terminal-error) !important;
+}
+
+/* Specific for success dice */
+a.die.success.selected {
+  box-shadow: 0 0 10px var(--terminal-warning),
+    0 0 20px var(--terminal-warning),
+    0 0 30px var(--terminal-warning) !important;
+  border-color: var(--terminal-warning) !important;
+}
+
+/* === SCENE CONTROLS EXCEPTION - BOTH MENUS === */
+menu#scene-controls-layers,
+menu#scene-controls-tools,
+menu.flexcol[data-application-part="layers"],
+menu.flexcol[data-application-part="tools"],
+aside#scene-controls menu {
+  background-color: transparent !important;
+  background: transparent !important;
+  background-image: none !important;
+}
+
+/* Asegurar que todos los elementos hijos también sean transparentes */
+menu#scene-controls-layers *:not(button):not(i):not([class*="fa-"]),
+menu#scene-controls-tools *:not(button):not(i):not([class*="fa-"]),
+aside#scene-controls menu *:not(button):not(i):not([class*="fa-"]) {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Los botones individuales pueden mantener su estilo */
+menu#scene-controls-layers button,
+menu#scene-controls-tools button,
+aside#scene-controls menu button {
+  background-color: var(--terminal-bg) !important;
+  border: 1px solid var(--terminal-border) !important;
+}
+
+menu#scene-controls-layers button:hover,
+menu#scene-controls-tools button:hover,
+aside#scene-controls menu button:hover {
+  background-color: var(--terminal-secondary) !important;
+  box-shadow: var(--terminal-glow) !important;
+}
+
+/* Botones activos */
+menu#scene-controls-layers button[aria-pressed="true"],
+menu#scene-controls-tools button[aria-pressed="true"],
+aside#scene-controls menu button[aria-pressed="true"] {
+  background-color: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+}
+
+/* === TABLE DESCRIPTION FIX === */
+.table-description,
+div.table-description {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  font-family: var(--terminal-font) !important;
+}
+
+.table-description p,
+div.table-description p {
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+  font-weight: bold !important;
+}
+
+/* === INLINE ROLL FIX === */
+a.inline-roll,
+a.inline-roll.roll {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+  border: 1px solid var(--terminal-border) !important;
+  padding: 2px 6px !important;
+  text-decoration: none !important;
+}
+
+a.inline-roll:hover,
+a.inline-roll.roll:hover {
+  color: var(--terminal-warning) !important;
+  border-color: var(--terminal-warning) !important;
+  box-shadow: 0 0 5px var(--terminal-warning) !important;
+  cursor: pointer !important;
+}
+
+/* Icono dentro del inline-roll */
+a.inline-roll i,
+a.inline-roll.roll i {
+  color: var(--terminal-primary) !important;
+  margin-right: 4px !important;
+}
+
+a.inline-roll:hover i,
+a.inline-roll.roll:hover i {
+  color: var(--terminal-warning) !important;
+}
+
+/* === SMALL CLASS FIX === */
+.small,
+div.small {
+  background-color: transparent !important;
+  font-family: var(--terminal-font) !important;
+  font-size: calc(var(--terminal-font-size) - 2px) !important;
+}
+
+.small input,
+div.small input,
+.small input[type="number"],
+div.small input[type="number"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: calc(var(--terminal-font-size) - 2px) !important;
+  border: 1px solid var(--terminal-border) !important;
+  padding: 2px 4px !important;
+}
+
+.small input:focus,
+div.small input:focus {
+  border-color: var(--terminal-primary) !important;
+  box-shadow: 0 0 3px var(--terminal-primary) !important;
+  outline: none !important;
+}
+
+/* Labels dentro de .small */
+.small label,
+div.small label {
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: calc(var(--terminal-font-size) - 2px) !important;
+}
+
+/* === BAR FIX === */
+.bar,
+div.bar {
+  background-color: var(--terminal-primary) !important;
+  background: var(--terminal-primary) !important;
+  background-image: none !important;
+  height: 100% !important;
+  transition: width 0.3s ease !important;
+}
+
+/* Estados diferentes de la barra */
+.bar.state1,
+div.bar.state1 {
+  background-color: var(--terminal-primary) !important;
+  background: var(--terminal-primary) !important;
+}
+
+.bar.state2,
+div.bar.state2 {
+  background-color: var(--terminal-warning) !important;
+  background: var(--terminal-warning) !important;
+}
+
+.bar.state3,
+div.bar.state3 {
+  background-color: var(--terminal-error) !important;
+  background: var(--terminal-error) !important;
+}
+
+/* Barra vacía o contenedor */
+.bar-container,
+div.bar-container {
+  background-color: var(--terminal-bg) !important;
+  border: 1px solid var(--terminal-border) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* === THRESHOLD TRIANGLE FIX - MEGA GRANDE === */
+.threshold,
+div.threshold {
+  position: absolute !important;
+  top: -25px !important;
+  width: 0 !important;
+  height: 0 !important;
+  z-index: 100 !important;
+  border-left: 25px solid transparent !important;
+  border-right: 25px solid transparent !important;
+  border-top: 38px solid var(--terminal-error) !important;
+  background: none !important;
+  background-color: transparent !important;
+  filter: none !important;
+  pointer-events: none !important;
+}
+
+/* Con glow épico opcional */
+.threshold.glow {
+  filter: drop-shadow(0 0 5px var(--terminal-error)) drop-shadow(0 0 10px var(--terminal-error)) !important;
+}
+
+/* === STANDARD FORM FIX === */
+.standard-form,
+section.standard-form,
+.window-content.standard-form {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  font-family: var(--terminal-font) !important;
+}
+
+/* Todos los elementos dentro de standard-form */
+.standard-form *:not(i):not(.fa):not(.fas):not(.far):not(.fab):not([class*="fa-"]):not([class^="fa-"]),
+section.standard-form *:not(i):not(.fa):not(.fas):not(.far):not(.fab):not([class*="fa-"]):not([class^="fa-"]),
+.window-content.standard-form *:not(i):not(.fa):not(.fas):not(.far):not(.fab):not([class*="fa-"]):not([class^="fa-"]) {
+  font-family: var(--terminal-font) !important;
+}
+
+/* Headers dentro de standard-form */
+.standard-form h2,
+.standard-form .sheet-divider {
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+  border-bottom: 1px solid var(--terminal-border) !important;
+}
+
+
+/* === FIX PARA INPUTS ESPECÍFICOS - COLOR PRIMARIO === */
+
+/* Input dentro de .header-fields > .attribute-box */
+.header-fields .attribute-box input[type="text"],
+.header-fields .attribute-box input[name="name"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  border: 1px solid var(--terminal-border) !important;
+  padding: 4px 6px !important;
+  -webkit-text-fill-color: var(--terminal-primary) !important;
+}
+
+/* Input con clase .title */
+input.title[type="text"],
+input.title[name="name"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  border: 1px solid var(--terminal-border) !important;
+  padding: 4px 6px !important;
+  -webkit-text-fill-color: var(--terminal-primary) !important;
+}
+
+/* Inputs dentro de .components (atributos del sistema) */
+.components input[type="number"],
+.components input[name^="system.attributes"],
+.components>div input[type="number"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  border: 1px solid var(--terminal-border) !important;
+  padding: 4px 6px !important;
+  -webkit-text-fill-color: var(--terminal-primary) !important;
+}
+
+/* Input .total (el que está deshabilitado) */
+.components input.total,
+input.total[type="number"][disabled],
+input.total[type="number"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  border: 1px solid var(--terminal-border) !important;
+  font-weight: bold !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+  -webkit-text-fill-color: var(--terminal-primary) !important;
+  opacity: 1 !important;
+}
+
+/* Focus */
+.header-fields .attribute-box input:focus,
+input.title:focus,
+.components input[type="number"]:focus {
+  border-color: var(--terminal-primary) !important;
+  box-shadow: 0 0 5px var(--terminal-primary) !important;
+  outline: none !important;
+}
+
+/* Placeholders */
+.header-fields .attribute-box input::placeholder,
+input.title::placeholder,
+.components input::placeholder {
+  color: var(--terminal-dim) !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: var(--terminal-dim) !important;
+}
+
+/* Input dentro de .form-fields */
+.form-fields input[type="number"],
+.form-fields input[name="difficulty"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  border: 1px solid var(--terminal-border) !important;
+  padding: 4px 6px !important;
+  -webkit-text-fill-color: var(--terminal-primary) !important;
+}
+
+.form-fields input[type="number"]:focus {
+  border-color: var(--terminal-primary) !important;
+  box-shadow: 0 0 5px var(--terminal-primary) !important;
+  outline: none !important;
+}
+
+/* Fix para entry-name hover - mantener colores terminal */
+a.entry-name.ellipsis,
+a.entry-name.ellipsis[data-action="activateEntry"] {
+  background-color: transparent !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+a.entry-name.ellipsis:hover,
+a.entry-name.ellipsis[data-action="activateEntry"]:hover {
+  background-color: transparent !important;
+  color: var(--terminal-warning) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+/* Input text dentro de .form-fields */
+.form-fields input[type="text"],
+.form-fields input[name="system.requirements"],
+.form-fields input[name="name"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  border: 1px solid var(--terminal-border) !important;
+  padding: 4px 6px !important;
+  -webkit-text-fill-color: var(--terminal-primary) !important;
+}
+
+/* Checkbox dentro de .form-fields */
+.form-fields input[type="checkbox"],
+.form-fields input[name="system.display"],
+.form-fields input[name="disabled"] {
+  background-color: var(--terminal-bg) !important;
+  border: 1px solid var(--terminal-border) !important;
+  accent-color: var(--terminal-primary) !important;
+}
+
+/* Input dentro de sheet-header img-name */
+header.sheet-header.img-name input[type="text"],
+header.sheet-header.img-name input[name="name"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  border: 1px solid var(--terminal-border) !important;
+  padding: 4px 6px !important;
+  -webkit-text-fill-color: var(--terminal-primary) !important;
+}
+
+/* === DIRECTORY ITEMS - HOVER INDIVIDUAL === */
+/* Solo items que NO son carpetas */
+li.directory-item:not(.folder):hover {
+  background-color: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+  box-shadow: var(--terminal-glow) !important;
+  border-color: var(--terminal-primary) !important;
+}
+
+/* El enlace dentro del item también debe cambiar de color */
+li.directory-item:not(.folder):hover a.entry-name,
+li.directory-item:not(.folder):hover .entry-name {
+  color: var(--terminal-bg) !important;
+  text-shadow: none !important;
+}
+
+/* Header de folder en hover - SOLO cuando haces hover en el header */
+li.directory-item.folder > header.folder-header:hover {
+  background-color: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+}
+
+li.directory-item.folder > header.folder-header:hover h3,
+li.directory-item.folder > header.folder-header:hover .folder-name {
+  color: var(--terminal-bg) !important;
+  text-shadow: none !important;
+}
+
+/* Evitar que el hover de la carpeta afecte a los items dentro */
+li.directory-item.folder:hover > ol.subdirectory {
+  background-color: var(--terminal-bg) !important;
+}
+
+li.directory-item.folder:hover > ol.subdirectory > li.directory-item {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+}
+
+li.directory-item.folder:hover > ol.subdirectory > li.directory-item > a.entry-name {
+  color: var(--terminal-primary) !important;
+}
+
+/* Asegurar que los items dentro de carpetas funcionen correctamente */
+li.directory-item.folder ol.subdirectory > li.directory-item:not(.folder):hover {
+  background-color: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+  box-shadow: var(--terminal-glow) !important;
+  border-color: var(--terminal-primary) !important;
+}
+
+li.directory-item.folder ol.subdirectory > li.directory-item:not(.folder):hover a.entry-name {
+  color: var(--terminal-bg) !important;
+  text-shadow: none !important;
+}
+
+/* Checkbox ultra específico - FONDO NEGRO SIEMPRE */
+.form-fields input[type="checkbox"],
+.form-fields input[type="checkbox"][name="disabled"],
+.form-fields input[type="checkbox"][id*="ActiveEffect"],
+input[type="checkbox"][name="disabled"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  border: 2px solid var(--terminal-border) !important;
+  accent-color: var(--terminal-primary) !important;
+  filter: none !important;
+}
+
+/* Checked state - FONDO NEGRO con marca verde */
+.form-fields input[type="checkbox"]:checked,
+input[type="checkbox"][name="disabled"]:checked,
+input[type="checkbox"][name="disabled"][checked] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  border: 2px solid var(--terminal-primary) !important;
+  accent-color: var(--terminal-primary) !important;
+  filter: brightness(1) !important;
+}
+
+/* Hover state */
+.form-fields input[type="checkbox"]:hover,
+input[type="checkbox"][name="disabled"]:hover {
+  border-color: var(--terminal-primary) !important;
+  box-shadow: 0 0 3px var(--terminal-primary) !important;
+}
+
+/* OL scrollable con data-changes */
+ol.scrollable[data-changes],
+ol.scrollable {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+}
+
+/* LI items dentro del scrollable */
+ol.scrollable li,
+ol.scrollable[data-changes] li {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  border-bottom: 1px solid var(--terminal-border) !important;
+}
+
+/* Divs internos: key, mode, value, priority, controls */
+ol.scrollable li div.key,
+ol.scrollable li div.mode,
+ol.scrollable li div.value,
+ol.scrollable li div.priority,
+ol.scrollable li div.controls {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+}
+
+/* Select dentro de key y mode */
+ol.scrollable li div.key select,
+ol.scrollable li div.mode select,
+select[name*="changes"][name*=".key"],
+select[name*="changes"][name*=".mode"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  border: 1px solid var(--terminal-border) !important;
+}
+
+/* Optgroup y options dentro de los selects */
+ol.scrollable select optgroup,
+ol.scrollable select option {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* Input text dentro de value */
+ol.scrollable li div.value input[type="text"],
+input[name*="changes"][name*=".value"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  border: 1px solid var(--terminal-border) !important;
+  padding: 4px 6px !important;
+  -webkit-text-fill-color: var(--terminal-primary) !important;
+}
+
+/* Input number dentro de priority */
+ol.scrollable li div.priority input[type="number"],
+input[name*="changes"][name*=".priority"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  border: 1px solid var(--terminal-border) !important;
+  padding: 4px 6px !important;
+  -webkit-text-fill-color: var(--terminal-primary) !important;
+}
+
+/* Placeholder para inputs */
+ol.scrollable input::placeholder {
+  color: var(--terminal-dim) !important;
+  opacity: 1 !important;
+}
+
+/* Button delete dentro de controls */
+ol.scrollable li div.controls button,
+button[data-action="deleteChange"] {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-error) !important;
+  border: 1px solid var(--terminal-border) !important;
+}
+
+ol.scrollable li div.controls button:hover,
+button[data-action="deleteChange"]:hover {
+  color: var(--terminal-error) !important;
+  box-shadow: 0 0 5px var(--terminal-error) !important;
+}
+
+/* UL modifier-list */
+ul.modifier-list {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  list-style: none !important;
+  padding: 0 !important;
+}
+
+/* LI modifier items */
+ul.modifier-list li.modifier,
+li[data-action="clickModifier"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  padding: 4px 8px !important;
+  border-bottom: 1px solid var(--terminal-border) !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Modifier active state - MISMO ESTILO QUE BOTÓN SELECCIONADO */
+ul.modifier-list li.modifier.active,
+li[data-action="clickModifier"].active {
+  background-color: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+  border-left: 3px solid var(--terminal-warning) !important;
+  box-shadow: var(--terminal-glow) !important;
+}
+
+/* Enlaces dentro de modifier */
+ul.modifier-list li.modifier a,
+li[data-action="clickModifier"] a {
+  background-color: transparent !important;
+  color: inherit !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  text-decoration: none !important;
+}
+
+/* Hover state - TEXTO OSCURO */
+ul.modifier-list li.modifier:hover,
+li[data-action="clickModifier"]:hover {
+  background-color: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+  border-left: 3px solid var(--terminal-warning) !important;
+  box-shadow: var(--terminal-glow) !important;
+}
+
+ul.modifier-list li.modifier:hover a,
+li[data-action="clickModifier"]:hover a {
+  color: var(--terminal-bg) !important;
+  text-shadow: none !important;
+}
+
+/* Active hover - AMARILLO CON TEXTO OSCURO */
+ul.modifier-list li.modifier.active:hover,
+li[data-action="clickModifier"].active:hover {
+  background-color: var(--terminal-warning) !important;
+  border-left: 3px solid var(--terminal-warning) !important;
+  box-shadow: 0 0 2px var(--terminal-warning), 0 0 4px var(--terminal-warning), 0 0 6px var(--terminal-warning) !important;
+  color: var(--terminal-bg) !important;
+}
+
+ul.modifier-list li.modifier.active:hover a,
+li[data-action="clickModifier"].active:hover a {
+  color: var(--terminal-bg) !important;
+  text-shadow: none !important;
+}
+
+/* Footer form-footer */
+footer.form-footer,
+footer[data-application-part="footer"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  border-top: 1px solid var(--terminal-border) !important;
+  padding: 10px !important;
+}
+
+/* Botón dentro del footer */
+footer.form-footer button,
+footer[data-application-part="footer"] button,
+footer.form-footer button[type="submit"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+  border: 1px solid var(--terminal-border) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  padding: 8px 16px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Span dentro del botón */
+footer.form-footer button span,
+footer[data-application-part="footer"] button span {
+  background-color: transparent !important;
+  color: inherit !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* Hover state - TEXTO OSCURO CON GLOW */
+footer.form-footer button:hover,
+footer[data-application-part="footer"] button:hover,
+footer.form-footer button[type="submit"]:hover {
+  background-color: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+  box-shadow: var(--terminal-glow) !important;
+  border-color: var(--terminal-primary) !important;
+}
+
+footer.form-footer button:hover span,
+footer[data-application-part="footer"] button:hover span {
+  color: var(--terminal-bg) !important;
+  text-shadow: none !important;
+}
+
+/* Attribute group */
+.attribute-group {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+}
+
+/* Label rollable dentro de attribute-group */
+.attribute-group label,
+.attribute-group label[data-action="rollTest"] {
+  background-color: transparent !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  padding: 4px 8px !important;
+  display: inline-block !important;
+}
+
+/* Hover state - MISMO EFECTO QUE EL BOTÓN */
+.attribute-group label:hover,
+.attribute-group label[data-action="rollTest"]:hover {
+  background-color: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+  box-shadow: var(--terminal-glow) !important;
+  text-shadow: none !important;
+  border-radius: 2px !important;
+}
+
+/* Components ya están definidos arriba, pero para asegurar */
+.attribute-group .components {
+  background-color: transparent !important;
+}
+
+.attribute-group .components input[type="number"] {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  border: 1px solid var(--terminal-border) !important;
+  -webkit-text-fill-color: var(--terminal-primary) !important;
+}
+
+.attribute-group .components input.total {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-weight: bold !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+  -webkit-text-fill-color: var(--terminal-primary) !important;
+}
+
+/* Dialog item */
+li.dialog-item,
+li[data-action="clickItem"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  padding: 8px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  border-bottom: 1px solid var(--terminal-border) !important;
+}
+
+/* Hover state - MISMO EFECTO QUE EL BOTÓN */
+li.dialog-item:hover,
+li[data-action="clickItem"]:hover {
+  background-color: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+  box-shadow: var(--terminal-glow) !important;
+}
+
+/* Selected/Active state - QUEDA MARCADO AL HACER CLICK */
+li.dialog-item.selected,
+li.dialog-item.active,
+li.dialog-item[aria-selected="true"],
+li[data-action="clickItem"].selected,
+li[data-action="clickItem"].active,
+li[data-action="clickItem"][aria-selected="true"] {
+  background-color: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+  box-shadow: var(--terminal-glow) !important;
+  border-left: 4px solid var(--terminal-warning) !important;
+}
+
+/* Label y link dentro del dialog-item */
+li.dialog-item label,
+li[data-action="clickItem"] label {
+  background-color: transparent !important;
+  color: inherit !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  cursor: pointer !important;
+}
+
+li.dialog-item label a,
+li[data-action="clickItem"] label a {
+  background-color: transparent !important;
+  color: inherit !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  text-decoration: none !important;
+}
+
+/* Hover y Selected sobre label y link - heredan el color oscuro */
+li.dialog-item:hover label,
+li.dialog-item:hover label a,
+li.dialog-item.selected label,
+li.dialog-item.selected label a,
+li.dialog-item.active label,
+li.dialog-item.active label a,
+li[data-action="clickItem"]:hover label,
+li[data-action="clickItem"]:hover label a,
+li[data-action="clickItem"].selected label,
+li[data-action="clickItem"].selected label a {
+  color: var(--terminal-bg) !important;
+  text-shadow: none !important;
+}
+
+/* Thumbnail (imagen) dentro del dialog-item */
+li.dialog-item img.thumbnail,
+li[data-action="clickItem"] img.thumbnail {
+  background-color: transparent !important;
+  border: 1px solid var(--terminal-border) !important;
+}
+
+li.dialog-item:hover img.thumbnail,
+li.dialog-item.selected img.thumbnail,
+li[data-action="clickItem"]:hover img.thumbnail,
+li[data-action="clickItem"].selected img.thumbnail {
+  border-color: var(--terminal-bg) !important;
+}
+
+
+/* Input dentro de div.flex.large */
+div.flex.large input[type="text"],
+.flex.large input[type="text"],
+input[name*="system.influence.factions"],
+input[name*=".notes"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  border: 1px solid var(--terminal-border) !important;
+  padding: 4px 6px !important;
+  -webkit-text-fill-color: var(--terminal-primary) !important;
+}
+
+/* Focus state */
+div.flex.large input[type="text"]:focus,
+.flex.large input[type="text"]:focus {
+  border-color: var(--terminal-primary) !important;
+  box-shadow: 0 0 5px var(--terminal-primary) !important;
+  outline: none !important;
+}
+
+/* Placeholder */
+div.flex.large input[type="text"]::placeholder,
+.flex.large input[type="text"]::placeholder {
+  color: var(--terminal-dim) !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: var(--terminal-dim) !important;
+}
+
+/* Botones tab con mismo estilo que submit */
+button[data-action="tab"],
+button[data-group="categories"],
+button.plain[type="button"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+  border: 1px solid var(--terminal-border) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  padding: 8px 16px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+/* Spans dentro del botón */
+button[data-action="tab"] span,
+button[data-group="categories"] span,
+button.plain[type="button"] span {
+  background-color: transparent !important;
+  color: inherit !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* Count span */
+button[data-action="tab"] span.count,
+button[data-group="categories"] span.count {
+  color: var(--terminal-secondary) !important;
+  font-size: calc(var(--terminal-font-size) - 2px) !important;
+  margin-left: 4px !important;
+}
+
+/* Hover state - TEXTO OSCURO CON GLOW */
+button[data-action="tab"]:hover,
+button[data-group="categories"]:hover,
+button.plain[type="button"]:hover {
+  background-color: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+  box-shadow: var(--terminal-glow) !important;
+  border-color: var(--terminal-primary) !important;
+}
+
+button[data-action="tab"]:hover span,
+button[data-group="categories"]:hover span,
+button.plain[type="button"]:hover span {
+  color: var(--terminal-bg) !important;
+  text-shadow: none !important;
+}
+
+button[data-action="tab"]:hover span.count,
+button[data-group="categories"]:hover span.count {
+  color: var(--terminal-bg) !important;
+  opacity: 0.8 !important;
+}
+
+/* Dialog menu */
+dialog#menu,
+dialog.themed,
+dialog.theme-dark {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  border: 2px solid var(--terminal-border) !important;
+  box-shadow: var(--terminal-glow) !important;
+}
+
+/* Menu items container */
+menu#main-menu-items,
+menu[data-application-part="items"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Menu item individual */
+li.menu-item,
+li.menu-item.flexrow,
+li[data-action="menuItem"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  padding: 12px 16px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  border-bottom: 1px solid var(--terminal-border) !important;
+}
+
+/* H2 dentro de menu-item */
+li.menu-item h2,
+li[data-action="menuItem"] h2 {
+  background-color: transparent !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-weight: normal !important;
+}
+
+/* Iconos dentro de menu-item */
+li.menu-item i,
+li[data-action="menuItem"] i {
+  color: var(--terminal-primary) !important;
+  margin-right: 12px !important;
+}
+
+/* Hover state - MISMO EFECTO QUE BOTÓN */
+li.menu-item:hover,
+li[data-action="menuItem"]:hover {
+  background-color: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+  box-shadow: inset var(--terminal-glow) !important;
+}
+
+li.menu-item:hover h2,
+li[data-action="menuItem"]:hover h2 {
+  color: var(--terminal-bg) !important;
+  text-shadow: none !important;
+}
+
+li.menu-item:hover i,
+li[data-action="menuItem"]:hover i {
+  color: var(--terminal-bg) !important;
+}
+
+/* === BOTONES DENTRO DEL CHAT - EXCLUYENDO UI CONTROLS === */
+#chat button[data-action]:not(.ui-control),
+#chat button[type="button"]:not(.ui-control),
+#chat-log button[data-action]:not(.ui-control),
+#chat-log button[type="button"]:not(.ui-control),
+.chat-message button[data-action]:not(.ui-control),
+.chat-message button[type="button"]:not(.ui-control) {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+  border: 1px solid var(--terminal-border) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+  transition: all 0.3s ease !important;
+  padding: 6px 12px !important;
+  height: auto !important;
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+#chat button[data-action]:not(.ui-control):hover,
+#chat button[type="button"]:not(.ui-control):hover,
+#chat-log button[data-action]:not(.ui-control):hover,
+#chat-log button[type="button"]:not(.ui-control):hover,
+.chat-message button[data-action]:not(.ui-control):hover,
+.chat-message button[type="button"]:not(.ui-control):hover {
+  background-color: var(--terminal-primary) !important;
+  background: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+  box-shadow: var(--terminal-glow) !important;
+  border: 1px solid var(--terminal-primary) !important;
+  border-color: var(--terminal-primary) !important;
+}
+
+/* === DICE TRAY BUTTONS - SOLO AD Y ROLL === */
+
+/* Botones advantage/disadvantage (KH/KL) */
+section.dice-tray button.dice-tray__ad,
+.dice-tray button.dice-tray__ad,
+#chat section.dice-tray button.dice-tray__ad {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+  border: 1px solid var(--terminal-border) !important;
+  padding: 4px 8px !important;
+  font-family: var(--terminal-font) !important;
+  font-size: calc(var(--terminal-font-size) - 2px) !important;
+  transition: all 0.3s ease !important;
+}
+
+section.dice-tray button.dice-tray__ad:hover,
+.dice-tray button.dice-tray__ad:hover,
+#chat section.dice-tray button.dice-tray__ad:hover {
+  background-color: var(--terminal-primary) !important;
+  background: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+  box-shadow: var(--terminal-glow) !important;
+  border-color: var(--terminal-primary) !important;
+}
+
+/* Botón Roll */
+section.dice-tray button.dice-tray__roll,
+.dice-tray button.dice-tray__roll,
+#chat section.dice-tray button.dice-tray__roll {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+  border: 1px solid var(--terminal-border) !important;
+  padding: 8px 16px !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+  transition: all 0.3s ease !important;
+}
+
+section.dice-tray button.dice-tray__roll:hover,
+.dice-tray button.dice-tray__roll:hover,
+#chat section.dice-tray button.dice-tray__roll:hover {
+  background-color: var(--terminal-primary) !important;
+  background: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+  box-shadow: var(--terminal-glow) !important;
+  border-color: var(--terminal-primary) !important;
+}
+/* === UI CONTROL BUTTONS - ROLL MODE === */
+#roll-privacy button.ui-control,
+#chat-controls button.ui-control {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+  border: 1px solid var(--terminal-border) !important;
+  font-family: var(--terminal-font) !important;
+  transition: all 0.3s ease !important;
+  padding: 6px 12px !important;
+}
+
+/* Hover */
+#roll-privacy button.ui-control:hover,
+#chat-controls button.ui-control:hover {
+  background-color: var(--terminal-secondary) !important;
+  box-shadow: 0 0 5px var(--terminal-primary) !important;
+  border-color: var(--terminal-primary) !important;
+}
+
+/* Estado seleccionado (pressed) */
+#roll-privacy button.ui-control[aria-pressed="true"],
+#chat-controls button.ui-control[aria-pressed="true"] {
+  background-color: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+  box-shadow: var(--terminal-glow) !important;
+  border-color: var(--terminal-primary) !important;
+  font-weight: bold !important;
+}
+
+/* Hover sobre el seleccionado */
+#roll-privacy button.ui-control[aria-pressed="true"]:hover,
+#chat-controls button.ui-control[aria-pressed="true"]:hover {
+  background-color: var(--terminal-warning) !important;
+  border-color: var(--terminal-warning) !important;
+  box-shadow: 0 0 2px var(--terminal-warning), 0 0 4px var(--terminal-warning), 0 0 6px var(--terminal-warning) !important;
+}
+
+/* === BOTONES CREATE-ENTRY Y CREATE-FOLDER === */
+button.create-entry,
+button.create-folder,
+button[data-action="createEntry"],
+button[data-action="createFolder"] {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+  border: 1px solid var(--terminal-border) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+  transition: all 0.3s ease !important;
+  padding: 8px 16px !important;
+  cursor: pointer !important;
+}
+
+/* Spans dentro de los botones */
+button.create-entry span,
+button.create-folder span,
+button[data-action="createEntry"] span,
+button[data-action="createFolder"] span {
+  background-color: transparent !important;
+  color: inherit !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* Iconos dentro de los botones */
+button.create-entry i,
+button.create-folder i,
+button[data-action="createEntry"] i,
+button[data-action="createFolder"] i {
+  color: inherit !important;
+  margin-right: 8px !important;
+}
+
+/* Hover state - TEXTO OSCURO CON GLOW */
+button.create-entry:hover,
+button.create-folder:hover,
+button[data-action="createEntry"]:hover,
+button[data-action="createFolder"]:hover {
+  background-color: var(--terminal-primary) !important;
+  background: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+  box-shadow: var(--terminal-glow) !important;
+  border-color: var(--terminal-primary) !important;
+}
+
+/* Span en hover - heredar el color oscuro */
+button.create-entry:hover span,
+button.create-folder:hover span,
+button[data-action="createEntry"]:hover span,
+button[data-action="createFolder"]:hover span {
+  color: var(--terminal-bg) !important;
+  text-shadow: none !important;
+}
+
+/* Icono en hover - heredar el color oscuro */
+button.create-entry:hover i,
+button.create-folder:hover i,
+button[data-action="createEntry"]:hover i,
+button[data-action="createFolder"]:hover i {
+  color: var(--terminal-bg) !important;
+  text-shadow: none !important;
+}
+
+/* === FIX PARA QUANTITY CONTROLS === */
+/* Mejor espacio para el número entre los botones +/- */
+
+form.application .quantity {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5em !important; /* Espacio entre elementos */
+  background-color: var(--terminal-bg) !important;
+  border: 1px solid var(--terminal-border) !important;
+  padding: 0.3em !important;
+  border-radius: 2px !important;
+}
+
+/* Número central con más espacio */
+form.application .quantity {
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  font-weight: bold !important;
+  min-width: 3em !important; /* Ancho mínimo para el número */
+  text-align: center !important;
+  padding: 0 0.5em !important; /* Padding horizontal */
+}
+
+/* Botones +/- más compactos */
+form.application .quantity button {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+  border: 1px solid var(--terminal-border) !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  font-weight: bold !important;
+  padding: 0.3em 0.6em !important; /* Padding más compacto */
+  min-width: 2em !important;
+  min-height: 2em !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
+}
+
+form.application .quantity button:hover {
+  background-color: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+  box-shadow: var(--terminal-glow) !important;
+}
+
+/* Alternativa: Si el número está como texto directo (no en span) */
+form.application div.quantity {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5em !important;
+  background-color: var(--terminal-bg) !important;
+  border: 1px solid var(--terminal-border) !important;
+  padding: 0.3em 0.5em !important;
+}
+
+/* Si necesitas más espacio específico para el número */
+form.application .quantity::after,
+form.application .quantity::before {
+  content: none !important; /* Limpiar cualquier pseudo-elemento */
+}
+
+/* === FIX PARA BOTÓN MAG === */
+/* Asegurar que TODO el contenido cambie de color en hover */
+
+form.application button.mag {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+  border: 1px solid var(--terminal-border) !important;
+  font-family: var(--terminal-font) !important;
+  transition: all 0.3s ease !important;
+}
+
+form.application button.mag:hover {
+  background-color: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+  box-shadow: var(--terminal-glow) !important;
+}
+
+/* Forzar que el label cambie de color */
+form.application button.mag label {
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+  transition: all 0.3s ease !important;
+  pointer-events: none !important; /* No interfiere con el hover del botón */
+}
+
+form.application button.mag:hover label {
+  color: var(--terminal-bg) !important;
+}
+
+/* Forzar que los values cambien de color */
+form.application button.mag .values {
+  color: var(--terminal-primary) !important;
+  transition: all 0.3s ease !important;
+}
+
+form.application button.mag:hover .values {
+  color: var(--terminal-bg) !important;
+}
+
+form.application button.mag .values div {
+  color: inherit !important; /* Heredar del padre */
+}
+
+/* Asegurar que TODOS los elementos hijos cambien */
+form.application button.mag:hover * {
+  color: var(--terminal-bg) !important;
+}
+
+/* También aplicar a otros botones similares */
+form.application button:hover label {
+  color: var(--terminal-bg) !important;
+}
+
+form.application button:hover div,
+form.application button:hover span {
+  color: var(--terminal-bg) !important;
+}
+
+/* === BORDES DE FORM - MINIMALISTA ABSOLUTO === */
+form.application {
+  border: 2px solid var(--terminal-border) !important;
+  box-shadow: var(--terminal-glow) !important;
+}
+
+/* === FIX COUNTER INPUTS - SOLO FONT === */
+#counter input[type="number"],
+.counter input[type="number"],
+div.counter input[type="number"] {
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* H3 dentro de counter - solo font */
+#counter h3,
+.counter h3 {
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+}
+
+/* Botones +/- - solo font */
+#counter .input-controls a,
+.counter .input-controls a {
+  font-family: var(--terminal-font) !important;
+}
+
+/* === FIX PARA DICE TRAY - TODO PEGADO SIN ESPACIOS === */
+/* Contenedor math buttons - sin gap */
+.dice-tray__math.dice-tray__math__buttons {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 0 !important;
+  background-color: var(--terminal-bg) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Contenedor #dice-tray-math - sin espacios */
+#dice-tray-math {
+  background-color: transparent !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Contenedor stacked - sin gap */
+.dice-tray__stacked,
+div.dice-tray__stacked {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 0 !important;
+  background-color: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Todos los botones y inputs - pegados */
+.dice-tray__math--sub,
+.dice-tray__math--add,
+.dice-tray__input,
+.dice-tray__stacked button.dice-tray__ad,
+button.dice-tray__advantage,
+button.dice-tray__disadvantage,
+.dice-tray__roll {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+  border: 1px solid var(--terminal-border) !important;
+  padding: 4px 8px !important;
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-font-size) !important;
+  transition: all 0.3s ease !important;
+  margin: 0 !important;
+  text-align: center !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+/* Input específico */
+.dice-tray__input {
+  min-width: 60px !important;
+  text-align: center !important;
+}
+
+/* Botones KH/KL más pequeños */
+.dice-tray__stacked button.dice-tray__ad,
+button.dice-tray__advantage,
+button.dice-tray__disadvantage {
+  font-size: calc(var(--terminal-font-size) - 2px) !important;
+}
+
+/* Eliminar bordes duplicados - todos los elementos contiguos */
+.dice-tray__math--sub + .dice-tray__input,
+.dice-tray__input + .dice-tray__math--add,
+.dice-tray__math--add + #dice-tray-math,
+#dice-tray-math + .dice-tray__roll,
+.dice-tray__stacked button.dice-tray__ad + button.dice-tray__ad {
+  border-left-width: 0 !important;
+}
+
+/* Hover con z-index para mostrar borde completo */
+.dice-tray__math--sub:hover,
+.dice-tray__math--add:hover,
+.dice-tray__input:hover,
+.dice-tray__stacked button.dice-tray__ad:hover,
+button.dice-tray__advantage:hover,
+button.dice-tray__disadvantage:hover,
+.dice-tray__roll:hover {
+  background-color: var(--terminal-primary) !important;
+  background: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+  box-shadow: var(--terminal-glow) !important;
+  border-color: var(--terminal-primary) !important;
+  position: relative !important;
+  z-index: 1 !important;
+  border-left-width: 1px !important;
+}
+
+/* === FONT AWESOME WEIGHT FIX === */
+i.fa-solid, .fas { font-weight: 900 !important; }
+i.fa-regular, .far { font-weight: 400 !important; }
+i.fa-brands, .fab { font-weight: 400 !important; }
+
+
+/* Locations - fondo negro forzado */
+.locations,
+.locations *,
+.location,
+.location *,
+.location-values,
+.location-values *,
+.location-values label,
+.location-values a,
+.damage-armour,
+.armour-value {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+}
+
+.location-values {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+.location-values {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+.location-values label,
+.location-values a,
+.damage-armour,
+.armour-value {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  vertical-align: middle !important;
+  line-height: 1 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Points blocks - fondo negro forzado */
+.points-block,
+.points-block *,
+.points-main,
+.points-main *,
+.points-buttons,
+.points-buttons *,
+.points-pips,
+.points-pips *,
+.pip,
+.pip-active,
+.pip-inactive,
+.pip-divider,
+.label,
+.ship-combat-action {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+}
+
+/* Ship combat card completo */
+.ship-combat-card,
+.ship-combat-card *,
+.ship-combat-header,
+.ship-combat-header *,
+.ship-diagram,
+.ship-diagram *,
+.ship-side,
+.ship-side *,
+.ship-stat-block,
+.ship-stat-block *,
+.ship-input-pair,
+.ship-input-pair *,
+.ship-input-group,
+.ship-input-group *,
+.ship-stat-label,
+.ship-input-label,
+.ship-side-label {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+}
+
+.pip-divider {
+  background-color: var(--terminal-primary) !important;
+  background: var(--terminal-primary) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: inline-block !important;
+}
+
+/* Hull stat, crew, roles, components - fondo negro */
+.hull-stat,
+.hull-stat *,
+.crew-experience-row,
+.crew-experience-row *,
+.crew-card-title,
+.crew-field,
+.crew-field *,
+.crew-label,
+.crew-static,
+.voidship-table-head,
+.voidship-table-head *,
+.voidship-table-cell,
+.ship-role-block,
+.ship-role-block *,
+.ship-role-description,
+.ship-role-description *,
+.ship-role-label,
+.ship-role-text,
+.ship-role-text *,
+.ship-component-block,
+.ship-component-block *,
+.ship-component-label,
+.ship-component-text,
+.ship-components-space,
+.ship-components-space *,
+.ship-components-label,
+.ship-components-value,
+.modifiers-card,
+.modifiers-card *,
+.modifiers-title,
+.modifiers-options,
+.modifiers-field,
+.modifiers-field *,
+.modifiers-label,
+.modifiers-button,
+.modifiers-buttons,
+.modifiers-checkbox,
+.modifiers-checkbox * {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-primary) !important;
+}
+
+/* Select y options dentro de modifiers */
+.modifiers-card select,
+.modifiers-card option,
+.modifiers-label select,
+.modifiers-label option {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+  border-color: var(--terminal-secondary) !important;
+}
+
+/* Checkboxes */
+.modifiers-checkbox input[type="checkbox"] {
+  accent-color: var(--terminal-primary) !important;
+}
+
+css#interface .hull-stat,
+#interface .hull-stat *,
+#interface .crew-experience-row,
+#interface .crew-experience-row *,
+#interface .crew-field,
+#interface .crew-field *,
+#interface .crew-static,
+#interface .voidship-table-head,
+#interface .voidship-table-cell,
+#interface .ship-role-block,
+#interface .ship-role-block *,
+#interface .ship-role-description,
+#interface .ship-role-description *,
+#interface .ship-component-block,
+#interface .ship-component-block *,
+#interface .ship-components-space,
+#interface .ship-components-space * {
+  background-color: #000000 !important;
+  background: #000000 !important;
+  color: #009900 !important;
+}
+
+/* Hull stat, crew, roles, components - fondo negro */
+.hull-stat,
+.hull-stat *,
+.crew-experience-row,
+.crew-experience-row *,
+.crew-card-title,
+.crew-field,
+.crew-field *,
+.crew-label,
+.crew-static,
+.voidship-table-head,
+.voidship-table-head *,
+.voidship-table-cell,
+.ship-role-block,
+.ship-role-block *,
+.ship-role-description,
+.ship-role-description *,
+.ship-role-label,
+.ship-role-text,
+.ship-role-text *,
+.ship-component-block,
+.ship-component-block *,
+.ship-component-label,
+.ship-component-text,
+.ship-components-space,
+.ship-components-space *,
+.ship-components-label,
+.ship-components-value,
+.modifiers-card,
+.modifiers-card *,
+.modifiers-title,
+.modifiers-options,
+.modifiers-field,
+.modifiers-field *,
+.modifiers-label,
+.modifiers-button,
+.modifiers-buttons,
+.modifiers-checkbox,
+.modifiers-checkbox * {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-primary) !important;
+}
+
+/* Select y options dentro de modifiers */
+.modifiers-card select,
+.modifiers-card option,
+.modifiers-label select,
+.modifiers-label option {
+  background-color: var(--terminal-bg) !important;
+  background: var(--terminal-bg) !important;
+  color: var(--terminal-primary) !important;
+  border-color: var(--terminal-secondary) !important;
+}
+
+/* Checkboxes */
+.modifiers-checkbox input[type="checkbox"] {
+  accent-color: var(--terminal-primary) !important;
+}

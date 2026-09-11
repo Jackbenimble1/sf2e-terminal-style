@@ -1,0 +1,622 @@
+/* ========================================================================== */
+/* Starfinder Second Edition 1.5.0 / Foundry VTT 14.367 compatibility layer   */
+/* Loaded after terminal-style.css. Keep layout rules owned by SF2e; override  */
+/* presentation only so upstream grids, flex layouts, scrolling, and controls  */
+/* remain functional.                                                         */
+/* ========================================================================== */
+
+/* -------------------------------------------------------------------------- */
+/* 1. SF2e variable bridge                                                    */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active,
+body.sf2e-terminal-active .app,
+body.sf2e-terminal-active .application,
+body.sf2e-terminal-active .themed.theme-light,
+body.sf2e-terminal-active .themed.theme-dark {
+  --color-bg-trait: var(--terminal-bg) !important;
+  --color-border-trait: var(--terminal-border) !important;
+  --color-pf-primary: var(--terminal-primary) !important;
+  --color-pf-primary-dark: var(--terminal-secondary) !important;
+  --color-pf-primary-darker: var(--terminal-bg) !important;
+  --color-pf-primary-light: var(--terminal-primary) !important;
+  --color-pf-primary-lighter: var(--terminal-text) !important;
+  --color-pf-secondary: var(--terminal-secondary) !important;
+  --color-pf-secondary-dark: var(--terminal-bg) !important;
+  --color-pf-secondary-light: var(--terminal-primary) !important;
+  --color-pf-secondary-lighter: var(--terminal-text) !important;
+  --color-scrollbar: var(--terminal-primary) !important;
+  --text-dark: var(--terminal-text) !important;
+  --text-light: var(--terminal-primary) !important;
+}
+
+/* Preserve rank differentiation while keeping it inside the chosen terminal palette. */
+body.sf2e-terminal-active {
+  --color-proficiency-trained: color-mix(in srgb, var(--terminal-secondary) 70%, var(--terminal-bg)) !important;
+  --color-proficiency-expert: color-mix(in srgb, var(--terminal-primary) 55%, var(--terminal-bg)) !important;
+  --color-proficiency-master: color-mix(in srgb, var(--terminal-text) 70%, var(--terminal-bg)) !important;
+  --color-proficiency-legendary: var(--terminal-warning) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 2. V14 ApplicationV1 + ApplicationV2 roots                                */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active .app.cyberpunk,
+body.sf2e-terminal-active .application.cyberpunk,
+body.sf2e-terminal-active .sf2e-terminal {
+  --color-scrollbar: var(--terminal-primary) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+body.sf2e-terminal-active .application.cyberpunk > .window-content,
+body.sf2e-terminal-active .app.cyberpunk > .window-content,
+body.sf2e-terminal-active .sf2e-terminal > .window-content {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+}
+
+body.sf2e-terminal-active .application.cyberpunk .window-header,
+body.sf2e-terminal-active .app.cyberpunk .window-header,
+body.sf2e-terminal-active .sf2e-terminal .window-header {
+  border-color: var(--terminal-border) !important;
+  color: var(--terminal-primary) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 3. Actor sheets: character, NPC, familiar, hazard, loot, party, army,      */
+/*    vehicle, attack popout, and shared creature dialogs                      */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active .actor.sheet section.window-content,
+body.sf2e-terminal-active .actor.sheet.attack-popout section.window-content {
+  background-color: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+/* SF2e adds Starfinder-specific sheet art on character and vehicle crb-style forms. */
+body.sf2e-terminal-active .actor.sheet.character section.window-content .crb-style,
+body.sf2e-terminal-active .actor.sheet.vehicle section.window-content .crb-style,
+body.sf2e-terminal-active .actor.sheet section.window-content form.crb-style {
+  --logo: none !important;
+  background-color: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-text) !important;
+}
+
+body.sf2e-terminal-active .actor.sheet .crb-style aside,
+body.sf2e-terminal-active .actor.sheet .crb-style .sidebar,
+body.sf2e-terminal-active .actor.sheet .crb-style .sheet-body,
+body.sf2e-terminal-active .actor.sheet .crb-style .sheet-content,
+body.sf2e-terminal-active .actor.sheet .crb-style .sheet-content > .tab,
+body.sf2e-terminal-active .actor.sheet .tab.active {
+  background-color: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-text) !important;
+}
+
+body.sf2e-terminal-active .actor.sheet .crb-style .logo {
+  background: none !important;
+  border-color: var(--terminal-border) !important;
+}
+
+body.sf2e-terminal-active .actor.sheet .char-header,
+body.sf2e-terminal-active .actor.sheet .char-header .level,
+body.sf2e-terminal-active .actor.sheet .char-header .details,
+body.sf2e-terminal-active .actor.sheet .char-header .char-details,
+body.sf2e-terminal-active .actor.sheet .sidebar_title,
+body.sf2e-terminal-active .actor.sheet .sidebar .sidebar_title {
+  background-image: none !important;
+  color: var(--terminal-primary) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+body.sf2e-terminal-active .actor.sheet .char-header .level {
+  filter: none !important;
+}
+
+/* Character/vehicle sheet navigation. */
+body.sf2e-terminal-active .actor.sheet .sheet-navigation {
+  background: var(--terminal-bg) !important;
+  border-color: var(--terminal-border) !important;
+  color: var(--terminal-secondary) !important;
+}
+
+body.sf2e-terminal-active .actor.sheet .sheet-navigation .panel-title {
+  color: var(--terminal-primary) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+body.sf2e-terminal-active .actor.sheet .sheet-navigation a.item,
+body.sf2e-terminal-active .actor.sheet .sheet-navigation [data-tab] {
+  background: var(--terminal-bg) !important;
+  border-color: var(--terminal-secondary) !important;
+  color: var(--terminal-secondary) !important;
+}
+
+body.sf2e-terminal-active .actor.sheet .sheet-navigation a.item.active,
+body.sf2e-terminal-active .actor.sheet .sheet-navigation a.item[aria-selected="true"],
+body.sf2e-terminal-active .actor.sheet .sheet-navigation [data-tab].active,
+body.sf2e-terminal-active .actor.sheet .sheet-navigation a.item:hover {
+  background: var(--terminal-bg) !important;
+  border-color: var(--terminal-primary) !important;
+  color: var(--terminal-primary) !important;
+  box-shadow: var(--terminal-glow) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+/* Shared SF2e actor lists: actions, inventory, feats, spells, effects, etc. */
+body.sf2e-terminal-active .actor.sheet .directory-list,
+body.sf2e-terminal-active .actor.sheet .item-list,
+body.sf2e-terminal-active .actor.sheet .inventory-list,
+body.sf2e-terminal-active .actor.sheet .actions-list,
+body.sf2e-terminal-active .actor.sheet .spell-list,
+body.sf2e-terminal-active .actor.sheet .effects-list,
+body.sf2e-terminal-active .actor.sheet .feats-list,
+body.sf2e-terminal-active .actor.sheet .skills-list {
+  background: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+}
+
+body.sf2e-terminal-active .actor.sheet .directory-list > h3,
+body.sf2e-terminal-active .actor.sheet .directory-list > li > h3,
+body.sf2e-terminal-active .actor.sheet .action-header,
+body.sf2e-terminal-active .actor.sheet .inventory-header,
+body.sf2e-terminal-active .actor.sheet .item-list > header,
+body.sf2e-terminal-active .actor.sheet .item-list .list-header,
+body.sf2e-terminal-active .actor.sheet .spell-list .spell-level-header {
+  background: var(--terminal-bg) !important;
+  border-color: var(--terminal-border) !important;
+  color: var(--terminal-primary) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+body.sf2e-terminal-active .actor.sheet .item-list .item,
+body.sf2e-terminal-active .actor.sheet .inventory-list .item,
+body.sf2e-terminal-active .actor.sheet .directory-list > li,
+body.sf2e-terminal-active .actor.sheet .actions-list .action,
+body.sf2e-terminal-active .actor.sheet .spell-list .item,
+body.sf2e-terminal-active .actor.sheet .effects-list .item,
+body.sf2e-terminal-active .actor.sheet .feats-list .item {
+  background-color: var(--terminal-bg) !important;
+  border-color: var(--terminal-secondary) !important;
+  color: var(--terminal-text) !important;
+}
+
+body.sf2e-terminal-active .actor.sheet .item-list .item:hover,
+body.sf2e-terminal-active .actor.sheet .inventory-list .item:hover,
+body.sf2e-terminal-active .actor.sheet .directory-list > li:hover,
+body.sf2e-terminal-active .actor.sheet .actions-list .action:hover {
+  border-color: var(--terminal-primary) !important;
+  box-shadow: inset 0 0 6px color-mix(in srgb, var(--terminal-primary) 35%, transparent) !important;
+}
+
+body.sf2e-terminal-active .actor.sheet .item-summary,
+body.sf2e-terminal-active .actor.sheet .item-detail,
+body.sf2e-terminal-active .actor.sheet .action-detail,
+body.sf2e-terminal-active .actor.sheet .spell-detail,
+body.sf2e-terminal-active .actor.sheet .details-container,
+body.sf2e-terminal-active .actor.sheet .notes,
+body.sf2e-terminal-active .actor.sheet .biography {
+  background: var(--terminal-bg) !important;
+  border-color: var(--terminal-secondary) !important;
+  color: var(--terminal-text) !important;
+}
+
+/* Actor stat blocks and framed values. */
+body.sf2e-terminal-active .actor.sheet .statistic,
+body.sf2e-terminal-active .actor.sheet .statistic .statistic-value,
+body.sf2e-terminal-active .actor.sheet .modifier,
+body.sf2e-terminal-active .actor.sheet .armor-class,
+body.sf2e-terminal-active .actor.sheet .hit-points,
+body.sf2e-terminal-active .actor.sheet .saving-throw,
+body.sf2e-terminal-active .actor.sheet .perception,
+body.sf2e-terminal-active .actor.sheet .skill,
+body.sf2e-terminal-active .actor.sheet .attribute,
+body.sf2e-terminal-active .actor.sheet .resource,
+body.sf2e-terminal-active .actor.sheet .data-value {
+  background-color: var(--terminal-bg) !important;
+  border-color: var(--terminal-border) !important;
+  color: var(--terminal-text) !important;
+}
+
+body.sf2e-terminal-active .actor.sheet .rollable,
+body.sf2e-terminal-active .actor.sheet [data-action="roll"],
+body.sf2e-terminal-active .actor.sheet [data-action="strike-attack"],
+body.sf2e-terminal-active .actor.sheet [data-action="strike-damage"] {
+  color: var(--terminal-primary) !important;
+}
+
+body.sf2e-terminal-active .actor.sheet .rollable:hover,
+body.sf2e-terminal-active .actor.sheet [data-action="roll"]:hover {
+  color: var(--terminal-warning) !important;
+  text-shadow: var(--terminal-glow) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 4. Item sheets: all SF2e/PF2e-derived item types                            */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active .pf2e.item.sheet .window-content,
+body.sf2e-terminal-active .item.sheet.pf2e .window-content {
+  background: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+}
+
+body.sf2e-terminal-active .pf2e.item.sheet form,
+body.sf2e-terminal-active .item.sheet.pf2e form,
+body.sf2e-terminal-active .pf2e.item.sheet .sheet-content,
+body.sf2e-terminal-active .pf2e.item.sheet .sheet-body,
+body.sf2e-terminal-active .pf2e.item.sheet .tab,
+body.sf2e-terminal-active .pf2e.item.sheet section.sidebar {
+  background: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+body.sf2e-terminal-active .pf2e.item.sheet .sheet-header,
+body.sf2e-terminal-active .pf2e.item.sheet .sheet-tabs,
+body.sf2e-terminal-active .pf2e.item.sheet nav,
+body.sf2e-terminal-active .pf2e.item.sheet .sidebar-summary {
+  background: var(--terminal-bg) !important;
+  border-color: var(--terminal-border) !important;
+  color: var(--terminal-primary) !important;
+}
+
+body.sf2e-terminal-active .pf2e.item.sheet .sheet-tabs [data-tab],
+body.sf2e-terminal-active .pf2e.item.sheet nav [data-tab] {
+  background: var(--terminal-bg) !important;
+  color: var(--terminal-secondary) !important;
+}
+
+body.sf2e-terminal-active .pf2e.item.sheet .sheet-tabs [data-tab].active,
+body.sf2e-terminal-active .pf2e.item.sheet nav [data-tab].active,
+body.sf2e-terminal-active .pf2e.item.sheet .sheet-tabs [data-tab][aria-selected="true"],
+body.sf2e-terminal-active .pf2e.item.sheet nav [data-tab]:hover {
+  border-color: var(--terminal-primary) !important;
+  color: var(--terminal-primary) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+/* Rule elements and item detail panels. */
+body.sf2e-terminal-active .pf2e.item.sheet .rules,
+body.sf2e-terminal-active .pf2e.item.sheet .rule-elements,
+body.sf2e-terminal-active .pf2e.item.sheet .rule-element,
+body.sf2e-terminal-active .pf2e.item.sheet .details,
+body.sf2e-terminal-active .pf2e.item.sheet .description,
+body.sf2e-terminal-active .pf2e.item.sheet .mystification {
+  background: var(--terminal-bg) !important;
+  border-color: var(--terminal-secondary) !important;
+  color: var(--terminal-text) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 5. Traits, tags, badges, pills, action glyphs                               */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active .pf2e .tag,
+body.sf2e-terminal-active .actor.sheet .tag,
+body.sf2e-terminal-active .pf2e.item.sheet .tag,
+body.sf2e-terminal-active .tagify__tag > div,
+body.sf2e-terminal-active .tagify,
+body.sf2e-terminal-active .tags .tag,
+body.sf2e-terminal-active .trait,
+body.sf2e-terminal-active .badge {
+  background: var(--terminal-bg) !important;
+  border-color: var(--terminal-border) !important;
+  color: var(--terminal-primary) !important;
+}
+
+body.sf2e-terminal-active .action-glyph,
+body.sf2e-terminal-active .action-glyphs,
+body.sf2e-terminal-active [class*="action-glyph"] {
+  color: var(--terminal-primary) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 6. Forms and editors inside SF2e surfaces                                   */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active .actor.sheet input:not([type="range"]):not([type="color"]),
+body.sf2e-terminal-active .actor.sheet select,
+body.sf2e-terminal-active .actor.sheet textarea,
+body.sf2e-terminal-active .pf2e.item.sheet input:not([type="range"]):not([type="color"]),
+body.sf2e-terminal-active .pf2e.item.sheet select,
+body.sf2e-terminal-active .pf2e.item.sheet textarea,
+body.sf2e-terminal-active .sf2e-terminal input:not([type="range"]):not([type="color"]),
+body.sf2e-terminal-active .sf2e-terminal select,
+body.sf2e-terminal-active .sf2e-terminal textarea {
+  background-color: var(--terminal-bg) !important;
+  border-color: var(--terminal-border) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+body.sf2e-terminal-active .actor.sheet input:focus,
+body.sf2e-terminal-active .actor.sheet select:focus,
+body.sf2e-terminal-active .actor.sheet textarea:focus,
+body.sf2e-terminal-active .pf2e.item.sheet input:focus,
+body.sf2e-terminal-active .pf2e.item.sheet select:focus,
+body.sf2e-terminal-active .pf2e.item.sheet textarea:focus,
+body.sf2e-terminal-active .sf2e-terminal input:focus,
+body.sf2e-terminal-active .sf2e-terminal select:focus,
+body.sf2e-terminal-active .sf2e-terminal textarea:focus {
+  border-color: var(--terminal-primary) !important;
+  box-shadow: var(--terminal-glow) !important;
+  outline: none !important;
+}
+
+body.sf2e-terminal-active .actor.sheet option,
+body.sf2e-terminal-active .pf2e.item.sheet option,
+body.sf2e-terminal-active .sf2e-terminal option {
+  background: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+}
+
+body.sf2e-terminal-active .actor.sheet fieldset,
+body.sf2e-terminal-active .pf2e.item.sheet fieldset,
+body.sf2e-terminal-active .sf2e-terminal fieldset {
+  background: var(--terminal-bg) !important;
+  border-color: var(--terminal-border) !important;
+}
+
+body.sf2e-terminal-active .actor.sheet legend,
+body.sf2e-terminal-active .pf2e.item.sheet legend,
+body.sf2e-terminal-active .sf2e-terminal legend,
+body.sf2e-terminal-active .actor.sheet label,
+body.sf2e-terminal-active .pf2e.item.sheet label {
+  color: var(--terminal-primary) !important;
+}
+
+/* ProseMirror / rich-text surfaces used by biographies and item descriptions. */
+body.sf2e-terminal-active .actor.sheet .prosemirror,
+body.sf2e-terminal-active .pf2e.item.sheet .prosemirror,
+body.sf2e-terminal-active .sf2e-terminal .prosemirror,
+body.sf2e-terminal-active .actor.sheet .editor-content,
+body.sf2e-terminal-active .pf2e.item.sheet .editor-content,
+body.sf2e-terminal-active .sf2e-terminal .editor-content,
+body.sf2e-terminal-active prose-mirror {
+  background: var(--terminal-bg) !important;
+  border-color: var(--terminal-border) !important;
+  color: var(--terminal-text) !important;
+}
+
+body.sf2e-terminal-active .prosemirror menu,
+body.sf2e-terminal-active .prosemirror .editor-menu,
+body.sf2e-terminal-active prose-mirror menu {
+  background: var(--terminal-bg) !important;
+  border-color: var(--terminal-border) !important;
+  color: var(--terminal-primary) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 7. Tables                                                                   */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active .actor.sheet table,
+body.sf2e-terminal-active .pf2e.item.sheet table,
+body.sf2e-terminal-active .sf2e-terminal table {
+  background: var(--terminal-bg) !important;
+  border-color: var(--terminal-border) !important;
+  color: var(--terminal-text) !important;
+}
+
+body.sf2e-terminal-active .actor.sheet table thead,
+body.sf2e-terminal-active .pf2e.item.sheet table thead,
+body.sf2e-terminal-active .sf2e-terminal table thead,
+body.sf2e-terminal-active .actor.sheet table th,
+body.sf2e-terminal-active .pf2e.item.sheet table th,
+body.sf2e-terminal-active .sf2e-terminal table th {
+  background: var(--terminal-bg) !important;
+  border-color: var(--terminal-border) !important;
+  color: var(--terminal-primary) !important;
+}
+
+body.sf2e-terminal-active .actor.sheet table tr,
+body.sf2e-terminal-active .pf2e.item.sheet table tr,
+body.sf2e-terminal-active .sf2e-terminal table tr,
+body.sf2e-terminal-active .actor.sheet table td,
+body.sf2e-terminal-active .pf2e.item.sheet table td,
+body.sf2e-terminal-active .sf2e-terminal table td {
+  border-color: var(--terminal-secondary) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 8. SF2e chat cards, checks, damage, spell/item cards                        */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active #chat-log .message .pf2e,
+body.sf2e-terminal-active #chat-log .message .chat-card,
+body.sf2e-terminal-active #chat-log .message .roll,
+body.sf2e-terminal-active #chat-log .message .dice-roll,
+body.sf2e-terminal-active #chat-log .message .message-content > section,
+body.sf2e-terminal-active #chat-log .message [data-tooltip-class="pf2e"] {
+  background-color: var(--terminal-bg) !important;
+  background-image: none !important;
+  border-color: var(--terminal-border) !important;
+  color: var(--terminal-text) !important;
+}
+
+body.sf2e-terminal-active #chat-log .message .card-header,
+body.sf2e-terminal-active #chat-log .message .card-content,
+body.sf2e-terminal-active #chat-log .message .card-buttons,
+body.sf2e-terminal-active #chat-log .message .tags,
+body.sf2e-terminal-active #chat-log .message .roll-note,
+body.sf2e-terminal-active #chat-log .message .target-dc,
+body.sf2e-terminal-active #chat-log .message .dice-formula,
+body.sf2e-terminal-active #chat-log .message .dice-tooltip,
+body.sf2e-terminal-active #chat-log .message .dice-total {
+  background-color: var(--terminal-bg) !important;
+  border-color: var(--terminal-border) !important;
+  color: var(--terminal-text) !important;
+}
+
+body.sf2e-terminal-active #chat-log .message .card-header,
+body.sf2e-terminal-active #chat-log .message .dice-total,
+body.sf2e-terminal-active #chat-log .message .statistic {
+  color: var(--terminal-primary) !important;
+  text-shadow: var(--terminal-text-shadow) !important;
+}
+
+/* Preserve semantic success/failure colors where SF2e supplies them; only clear paper backgrounds. */
+body.sf2e-terminal-active #chat-log .message .degree-of-success,
+body.sf2e-terminal-active #chat-log .message .outcome,
+body.sf2e-terminal-active #chat-log .message .result {
+  background-image: none !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 9. Compendium browser and system utility applications                       */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active .compendium-browser,
+body.sf2e-terminal-active .compendium-browser .window-content,
+body.sf2e-terminal-active .compendium-browser .browser,
+body.sf2e-terminal-active .compendium-browser .filter-container,
+body.sf2e-terminal-active .compendium-browser .filter-panel,
+body.sf2e-terminal-active .compendium-browser .content,
+body.sf2e-terminal-active .compendium-browser .results,
+body.sf2e-terminal-active .compendium-browser .item-list {
+  background: var(--terminal-bg) !important;
+  border-color: var(--terminal-border) !important;
+  color: var(--terminal-text) !important;
+}
+
+body.sf2e-terminal-active .compendium-browser nav,
+body.sf2e-terminal-active .compendium-browser .tabs,
+body.sf2e-terminal-active .compendium-browser .filter-title,
+body.sf2e-terminal-active .compendium-browser header {
+  background: var(--terminal-bg) !important;
+  border-color: var(--terminal-border) !important;
+  color: var(--terminal-primary) !important;
+}
+
+body.sf2e-terminal-active .compendium-browser .item,
+body.sf2e-terminal-active .compendium-browser .result,
+body.sf2e-terminal-active .compendium-browser li {
+  border-color: var(--terminal-secondary) !important;
+  color: var(--terminal-text) !important;
+}
+
+/* Broad system-owned V1/V2 utility surfaces. This intentionally avoids layout properties. */
+body.sf2e-terminal-active .sf2e-terminal .form-group,
+body.sf2e-terminal-active .sf2e-terminal .form-fields,
+body.sf2e-terminal-active .sf2e-terminal .dialog-content,
+body.sf2e-terminal-active .sf2e-terminal .standard-form,
+body.sf2e-terminal-active .sf2e-terminal .scrollable,
+body.sf2e-terminal-active .sf2e-terminal .tab,
+body.sf2e-terminal-active .sf2e-terminal .content,
+body.sf2e-terminal-active .sf2e-terminal .sidebar {
+  border-color: var(--terminal-secondary) !important;
+  color: var(--terminal-text) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 10. Tooltips, menus, autocomplete, popovers                                 */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active #tooltip,
+body.sf2e-terminal-active .locked-tooltip,
+body.sf2e-terminal-active .pf2e-tooltip,
+body.sf2e-terminal-active [data-tooltip-class="pf2e"] .tooltip,
+body.sf2e-terminal-active .context-menu,
+body.sf2e-terminal-active #context-menu,
+body.sf2e-terminal-active .autocomplete,
+body.sf2e-terminal-active .dropdown-menu,
+body.sf2e-terminal-active .menu-items {
+  background: var(--terminal-bg) !important;
+  border-color: var(--terminal-border) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+body.sf2e-terminal-active #tooltip a,
+body.sf2e-terminal-active .locked-tooltip a,
+body.sf2e-terminal-active .pf2e-tooltip a,
+body.sf2e-terminal-active .context-menu a,
+body.sf2e-terminal-active #context-menu a {
+  color: var(--terminal-primary) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 11. Journals, embeds, enrichment, inline checks                             */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active .journal-sheet .journal-entry-content,
+body.sf2e-terminal-active .journal-entry-page,
+body.sf2e-terminal-active .journal-entry-page .editor-content,
+body.sf2e-terminal-active .journal-entry-pages,
+body.sf2e-terminal-active .journal-sidebar {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+}
+
+body.sf2e-terminal-active .content-link,
+body.sf2e-terminal-active .inline-roll,
+body.sf2e-terminal-active .inline-check,
+body.sf2e-terminal-active [data-pf2-check],
+body.sf2e-terminal-active [data-pf2-action],
+body.sf2e-terminal-active [data-pf2-effect-area] {
+  background-color: var(--terminal-bg) !important;
+  border-color: var(--terminal-border) !important;
+  color: var(--terminal-primary) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 12. Buttons and controls: keep icon controls compact                        */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active .actor.sheet button:not(.icon):not(.inline-control):not(.ui-control),
+body.sf2e-terminal-active .pf2e.item.sheet button:not(.icon):not(.inline-control):not(.ui-control),
+body.sf2e-terminal-active .sf2e-terminal button:not(.icon):not(.inline-control):not(.ui-control) {
+  background: var(--terminal-bg) !important;
+  border-color: var(--terminal-border) !important;
+  color: var(--terminal-primary) !important;
+  font-family: var(--terminal-font) !important;
+}
+
+body.sf2e-terminal-active .actor.sheet button:not(.icon):not(.inline-control):not(.ui-control):hover,
+body.sf2e-terminal-active .pf2e.item.sheet button:not(.icon):not(.inline-control):not(.ui-control):hover,
+body.sf2e-terminal-active .sf2e-terminal button:not(.icon):not(.inline-control):not(.ui-control):hover {
+  background: var(--terminal-primary) !important;
+  border-color: var(--terminal-primary) !important;
+  color: var(--terminal-bg) !important;
+  box-shadow: var(--terminal-glow) !important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 13. Images/icons: preserve game art and Foundry/SF2e icons                  */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active .actor.sheet img,
+body.sf2e-terminal-active .pf2e.item.sheet img,
+body.sf2e-terminal-active #chat-log img,
+body.sf2e-terminal-active .compendium-browser img {
+  opacity: 1;
+}
+
+body.sf2e-terminal-active .actor.sheet i,
+body.sf2e-terminal-active .pf2e.item.sheet i,
+body.sf2e-terminal-active .sf2e-terminal i,
+body.sf2e-terminal-active .actor.sheet [class*="fa-"],
+body.sf2e-terminal-active .pf2e.item.sheet [class*="fa-"],
+body.sf2e-terminal-active .sf2e-terminal [class*="fa-"] {
+  background: transparent !important;
+  text-shadow: none;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 14. Scrollbars                                                              */
+/* -------------------------------------------------------------------------- */
+
+body.sf2e-terminal-active .actor.sheet *,
+body.sf2e-terminal-active .pf2e.item.sheet *,
+body.sf2e-terminal-active .sf2e-terminal *,
+body.sf2e-terminal-active .compendium-browser * {
+  scrollbar-color: var(--terminal-primary) var(--terminal-bg);
+}
