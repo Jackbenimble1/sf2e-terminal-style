@@ -4,10 +4,10 @@
  */
 
 class CyberpunkTerminalEffects {
-    static MODULE_ID = 'sf2e-terminal-style';
+    static MODULE_ID = 'sf2e-terminal-style-client-edition';
     static TARGET_SYSTEM_ID = 'sf2e';
-    static TARGET_SYSTEM_VERSION = '1.5.0';
-    static MODULE_TITLE = 'Starfinder 2e Terminal Style';
+    static TARGET_SYSTEM_VERSION = '1.5.1';
+    static MODULE_TITLE = 'Starfinder 2e Terminal Style - Client Edition';
     static isApplyingPreset = false; // Flag para evitar updates durante preset application
     static coreUiObserver = null;
     static coreUiRefreshQueued = false;
