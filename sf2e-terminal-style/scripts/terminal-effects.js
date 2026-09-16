@@ -8,7 +8,6 @@ class CyberpunkTerminalEffects {
     static TARGET_SYSTEM_ID = 'sf2e';
     static TARGET_SYSTEM_VERSION = '1.5.1';
     static MODULE_TITLE = 'Starfinder 2e Terminal Style - Client Edition';
-    static isApplyingPreset = false; // Flag para evitar updates durante preset application
     static coreUiObserver = null;
     static coreUiRefreshQueued = false;
 
@@ -211,7 +210,7 @@ class CyberpunkTerminalEffects {
         game.settings.register(this.MODULE_ID, 'colorPreset', {
             name: 'Color Presets',
             hint: 'Select a predefined color preset',
-            scope: 'world',
+            scope: 'client',
             config: true,
             type: String,
             choices: {
@@ -433,44 +432,38 @@ class CyberpunkTerminalEffects {
         });
     }
 
-    static updateColors() {
-        // Evitar updates mientras se aplica un preset
-        if (this.isApplyingPreset) {
-            console.log(`${this.MODULE_TITLE} | Skipping updateColors (preset application in progress)`);
-            return;
+static applyColorValues(colors) {
+    const style = document.getElementById('terminal-color-style') || document.createElement('style');
+    style.id = 'terminal-color-style';
+
+    style.textContent = `
+        :root {
+            --terminal-bg: ${colors.background} !important;
+            --terminal-primary: ${colors.foundryMenuIcon} !important;
+            --terminal-secondary: ${colors.console} !important;
+            --terminal-dim: ${colors.dimText} !important;
+            --terminal-text: ${colors.text} !important;
+            --terminal-border: ${colors.border} !important;
         }
+    `;
 
-        const borderColor = game.settings.get(this.MODULE_ID, 'borderColor');
-        const consoleLogColor = game.settings.get(this.MODULE_ID, 'consoleLogColor');
-        const foundryMenuIconColor = game.settings.get(this.MODULE_ID, 'foundryMenuIconColor');
-        const backgroundColor = game.settings.get(this.MODULE_ID, 'backgroundColor');
-        const mainTextColor = game.settings.get(this.MODULE_ID, 'mainTextColor');
-        const dimTextColor = game.settings.get(this.MODULE_ID, 'dimTextColor');
-
-
-        // Create dynamic CSS for colors
-        const style = document.getElementById('terminal-color-style') || document.createElement('style');
-        style.id = 'terminal-color-style';
-
-        style.textContent = `
-            :root {
-                --terminal-bg: ${backgroundColor} !important;
-                --terminal-primary: ${foundryMenuIconColor} !important;
-                --terminal-secondary: ${consoleLogColor} !important;
-                --terminal-dim: ${dimTextColor} !important;
-                --terminal-text: ${mainTextColor} !important; 
-                --terminal-border: ${borderColor} !important;
-                
-            }
-        `;
-
-        if (!document.getElementById('terminal-color-style')) {
-            document.head.appendChild(style);
-        }
-
-        this.updateGlowIntensity(); // Update glow with new colors
+    if (!document.getElementById('terminal-color-style')) {
+        document.head.appendChild(style);
     }
 
+    this.updateGlowIntensity(colors.border);
+}
+
+static updateColors() {
+    this.applyColorValues({
+        border: game.settings.get(this.MODULE_ID, 'borderColor'),
+        console: game.settings.get(this.MODULE_ID, 'consoleLogColor'),
+        foundryMenuIcon: game.settings.get(this.MODULE_ID, 'foundryMenuIconColor'),
+        background: game.settings.get(this.MODULE_ID, 'backgroundColor'),
+        text: game.settings.get(this.MODULE_ID, 'mainTextColor'),
+        dimText: game.settings.get(this.MODULE_ID, 'dimTextColor')
+    });
+}
     static updateFontSize() {
         const fontSize = game.settings.get(this.MODULE_ID, 'fontSize');
 
@@ -582,15 +575,16 @@ class CyberpunkTerminalEffects {
         }
     }
 
-    static async applyColorPreset(newValue) {
-        // Usar el parámetro que onChange pasa automáticamente
+static applyColorPreset(newValue, notify = true) {
+    // Usar el parámetro que onChange pasa automáticamente
         const preset = newValue || game.settings.get(this.MODULE_ID, 'colorPreset');
 
         console.log(`${this.MODULE_TITLE} | applyColorPreset called with: ${preset}`);
 
         // Solo retornar si el NUEVO preset es 'custom'
         if (preset === 'custom') {
-            console.log(`${this.MODULE_TITLE} | Custom preset selected, no changes applied`);
+            console.log(`${this.MODULE_TITLE} | Custom preset selected; applying world custom colors`);
+            this.updateColors();
             return;
         }
 
@@ -907,50 +901,32 @@ class CyberpunkTerminalEffects {
 
         if (presets[preset]) {
             const colors = presets[preset];
-            console.log(`${this.MODULE_TITLE} | Applying colors:`, colors);
+            console.log(`${this.MODULE_TITLE} | Applying user color preset:`, preset, colors);
+            this.applyColorValues(colors);
 
-            // BLOQUEAR updateColors durante la aplicación
-            this.isApplyingPreset = true;
-
-            // Guardar todos los settings SIN disparar updateColors en cada onChange
-            await Promise.all([
-                game.settings.set(this.MODULE_ID, 'borderColor', colors.border),
-                game.settings.set(this.MODULE_ID, 'consoleLogColor', colors.console),
-                game.settings.set(this.MODULE_ID, 'foundryMenuIconColor', colors.foundryMenuIcon),
-                game.settings.set(this.MODULE_ID, 'backgroundColor', colors.background),
-                game.settings.set(this.MODULE_ID, 'mainTextColor', colors.text),
-                game.settings.set(this.MODULE_ID, 'dimTextColor', colors.dimText)
-            ]);
-
-            console.log(`${this.MODULE_TITLE} | All color settings saved, now applying styles...`);
-
-            // Esperar un momento para que Foundry persista los cambios
-            await new Promise(resolve => setTimeout(resolve, 150));
-
-            // DESBLOQUEAR y aplicar los colores visualmente UNA VEZ
-            this.isApplyingPreset = false;
-            this.updateColors();
-
-            ui.notifications.info(`Color preset "${preset}" applied successfully.`);
+            if (notify) {
+                ui.notifications.info(`Color preset "${preset}" applied successfully.`);
+            }
         } else {
-            console.warn(`${this.MODULE_TITLE} | Preset not found: ${preset}`);
+           console.warn(`${this.MODULE_TITLE} | Preset not found: ${preset}; falling back to custom colors`);
+           this.updateColors();
         }
     }
 
     static applyTerminalEffects() {
-        const body = document.body;
+        const preset = game.settings.get(this.MODULE_ID, 'colorPreset');
 
-        // Apply all settings
-        this.updateColors();
+        // The preset is a per-client preference. Predefined presets are applied
+        // directly to this client's CSS variables; custom uses world color fields.
+        this.applyColorPreset(preset, false);
         this.updateFontSize();
         this.updateFontFamily();
-        this.updateGlowIntensity();
         this.updateAnimationSpeed();
     }
 
-    static updateGlowIntensity() {
+    static updateGlowIntensity(borderColorOverride = null) {
         const intensity = game.settings.get(this.MODULE_ID, 'glowIntensity') || 50;
-        const borderColor = game.settings.get(this.MODULE_ID, 'borderColor') || '#0f0';
+        const borderColor = borderColorOverride || game.settings.get(this.MODULE_ID, 'borderColor') || '#0f0';
         const glowValue = intensity * 0.3;
 
         let style = document.getElementById('terminal-glow-style');
