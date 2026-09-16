@@ -1,13 +1,12 @@
 {
-  "id": "sf2e-terminal-style",
+  "id": "sf2e-terminal-style-client-edition",
   "type": "module",
-  "title": "Starfinder 2e Terminal Style",
+  "title": "Starfinder 2e Terminal Style - Client Edition",
   "description": "SF2e-specific port of the Cyberpunk/Starfinder Terminal Style, preserving the original terminal presets, typography, glow, colors, and UI treatment for Starfinder Second Edition.",
-  "version": "2.0.8",
+  "version": "3.0",
   "compatibility": {
     "minimum": "14.367",
-    "verified": "14.367",
-    "maximum": "14"
+    "verified": "14.367"
   },
   "relationships": {
     "systems": [
@@ -16,14 +15,14 @@
         "type": "system",
         "compatibility": {
           "minimum": "1.5.0",
-          "verified": "1.5.0"
+          "verified": "1.5.1"
         }
       }
     ]
   },
   "authors": [
     {
-      "name": "GusRPG"
+      "name": "JackBeNimble"
     }
   ],
   "esmodules": [
